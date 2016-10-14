@@ -18,6 +18,10 @@ class Instructions extends React.Component {
   }
 
   componentWillMount() {
+    this.generateInstructions();
+  }
+
+  generateInstructions() {
     var moves = this.state.moves;
     var instructions = this.state.instructions;
 
@@ -51,8 +55,8 @@ class Instructions extends React.Component {
     var instructions = this.state.instructions.join(", ").toString();
 
     return (
-      <div>
-        {instructions}
+      <div className="instructions-container">
+        <h3 className="instructions">{instructions}</h3>
       </div>
     );
   }

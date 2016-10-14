@@ -6,9 +6,6 @@ class Timer extends React.Component {
 
     this.state = {
       time: 0,
-      startTime: 0,
-      diff: 0,
-      laps: [],
       running: false
     }
 
@@ -45,13 +42,31 @@ class Timer extends React.Component {
   }
 
   handleStart() {
+
     this.increment = setInterval(() => {
       this.setState({
         time: this.state.time + 1,
-        startTime: new Date(),
         running: true
       });
     }, 10);
+
+    if (this.state.time > 0) {
+      clearInterval(this.increment);
+
+      this.setState({
+        time: 0
+      });
+
+      this.increment = setInterval(() => {
+        this.setState({
+          time: this.state.time + 1,
+          running: true
+        });
+      }, 10);
+
+    } else {
+      this.increment;
+    }
   }
 
   handleStop() {
@@ -86,8 +101,8 @@ class Timer extends React.Component {
 
     return (
       <div>
-        <h1>{this.getTimestamp()}</h1>
-        <button onClick={this.handleReset.bind(this)}>Reset</button>
+        <h1 className="timestamp">{this.getTimestamp()}</h1>
+        <button className="btn reset-btn" onClick={this.handleReset.bind(this)}>Reset</button>
       </div>
     );
   }

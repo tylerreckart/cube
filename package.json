@@ -31,6 +31,8 @@
     "url": "https://github.com/tylerreckart/cube-timer/issues"
   },
   "homepage": "https://github.com/tylerreckart/cube-timer#readme",
-  "devDependencies": {},
+  "devDependencies": {
+    "webpack": "^2.1.0-beta.21"
+  },
   "description": ""
 }

@@ -21477,7 +21477,26 @@
 	        'div',
 	        null,
 	        _react2.default.createElement(_instructions2.default, null),
-	        _react2.default.createElement(_timer2.default, null)
+	        _react2.default.createElement(_timer2.default, null),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'description' },
+	          _react2.default.createElement(
+	            'p',
+	            null,
+	            'Use the spacebar to start, stop, and reset the timer. You can manually reset the timer by pressing the reset button above.'
+	          ),
+	          _react2.default.createElement(
+	            'p',
+	            null,
+	            '\xA9 2016 ',
+	            _react2.default.createElement(
+	              'a',
+	              { href: 'https://tylerreckart.com/', target: '_blank' },
+	              'Tyler Reckart'
+	            )
+	          )
+	        )
 	      );
 	    }
 	  }]);
@@ -21529,6 +21548,11 @@
 	  _createClass(Instructions, [{
 	    key: 'componentWillMount',
 	    value: function componentWillMount() {
+	      this.generateInstructions();
+	    }
+	  }, {
+	    key: 'generateInstructions',
+	    value: function generateInstructions() {
 	      var moves = this.state.moves;
 	      var instructions = this.state.instructions;
 
@@ -21566,8 +21590,12 @@
 
 	      return _react2.default.createElement(
 	        'div',
-	        null,
-	        instructions
+	        { className: 'instructions-container' },
+	        _react2.default.createElement(
+	          'h3',
+	          { className: 'instructions' },
+	          instructions
+	        )
 	      );
 	    }
 	  }]);
@@ -21611,9 +21639,6 @@
 
 	    _this.state = {
 	      time: 0,
-	      startTime: 0,
-	      diff: 0,
-	      laps: [],
 	      running: false
 	    };
 
@@ -21661,10 +21686,26 @@
 	      this.increment = setInterval(function () {
 	        _this2.setState({
 	          time: _this2.state.time + 1,
-	          startTime: new Date(),
 	          running: true
 	        });
 	      }, 10);
+
+	      if (this.state.time > 0) {
+	        clearInterval(this.increment);
+
+	        this.setState({
+	          time: 0
+	        });
+
+	        this.increment = setInterval(function () {
+	          _this2.setState({
+	            time: _this2.state.time + 1,
+	            running: true
+	          });
+	        }, 10);
+	      } else {
+	        this.increment;
+	      }
 	    }
 	  }, {
 	    key: "handleStop",
@@ -21707,12 +21748,12 @@
 	        null,
 	        _react2.default.createElement(
 	          "h1",
-	          null,
+	          { className: "timestamp" },
 	          this.getTimestamp()
 	        ),
 	        _react2.default.createElement(
 	          "button",
-	          { onClick: this.handleReset.bind(this) },
+	          { className: "btn reset-btn", onClick: this.handleReset.bind(this) },
 	          "Reset"
 	        )
 	      );
