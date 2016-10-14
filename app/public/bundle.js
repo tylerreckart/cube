@@ -21443,9 +21443,9 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _scrambler = __webpack_require__(173);
+	var _instructions = __webpack_require__(174);
 
-	var _scrambler2 = _interopRequireDefault(_scrambler);
+	var _instructions2 = _interopRequireDefault(_instructions);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -21455,7 +21455,7 @@
 	    return _react2.default.createElement(
 	      'div',
 	      null,
-	      _react2.default.createElement(_scrambler2.default, null)
+	      _react2.default.createElement(_instructions2.default, null)
 	    );
 	  }
 	});
@@ -21463,7 +21463,8 @@
 	exports.default = App;
 
 /***/ },
-/* 173 */
+/* 173 */,
+/* 174 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -21486,34 +21487,59 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var Scrambler = function (_React$Component) {
-	  _inherits(Scrambler, _React$Component);
+	var Instructions = function (_React$Component) {
+	  _inherits(Instructions, _React$Component);
 
-	  function Scrambler() {
-	    _classCallCheck(this, Scrambler);
+	  function Instructions() {
+	    _classCallCheck(this, Instructions);
 
-	    var _this = _possibleConstructorReturn(this, (Scrambler.__proto__ || Object.getPrototypeOf(Scrambler)).call(this));
+	    var _this = _possibleConstructorReturn(this, (Instructions.__proto__ || Object.getPrototypeOf(Instructions)).call(this));
 
 	    _this.state = {
-	      moves: ['R', 'R2', 'Rp', '2Rp', 'L', 'L2', 'Lp', '2Lp', 'U', 'U2', 'Up', '2Up', 'D', 'D2', 'Dp', '2Dp', 'F', 'F2', 'Fp', '2Fp', 'B', 'B2', 'Bp', '2Bp'],
+	      moves: ['R', 'R2', 'R' + "'", '2R' + "'", 'L', 'L2', 'L' + "'", '2L' + "'", 'U', 'U2', 'U' + "'", '2U' + "'", 'D', 'D2', 'D' + "'", '2D' + "'", 'F', 'F2', 'F' + "'", '2F' + "'", 'B', 'B2', 'B' + "'", '2B' + "'"],
 	      instructions: []
 	    };
 	    return _this;
 	  }
 
-	  _createClass(Scrambler, [{
-	    key: 'generateInstructions',
-	    value: function generateInstructions() {
-	      for (var i = 0; i < 25; i++) {
-	        var moves = this.state.moves;
-	        var j = Math.floor(Math.random() * moves.length);
+	  _createClass(Instructions, [{
+	    key: 'componentWillMount',
+	    value: function componentWillMount() {
+	      var moves = this.state.moves;
+	      var instructions = this.state.instructions;
 
-	        instructions.push(moves[j]);
+	      while (instructions.length < moves.length) {
+	        for (var i = 0; i < moves.length; i++) {
+	          instructions.push(moves[i]);
+	        }
+
+	        var currentIndex = instructions.length,
+	            temporaryValue,
+	            randomIndex;
+
+	        while (0 !== currentIndex) {
+	          // Pick a remaining element...
+	          randomIndex = Math.floor(Math.random() * currentIndex);
+	          currentIndex -= 1;
+
+	          // And swap it with the current element.
+	          temporaryValue = instructions[currentIndex];
+	          instructions[currentIndex] = instructions[randomIndex];
+	          instructions[randomIndex] = temporaryValue;
+	        }
 	      }
+
+	      this.setState({
+	        instructions: instructions
+	      });
+
+	      console.log(this.state.instructions);
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
+	      var instructions = this.state.instructions.join(", ").toString();
+
 	      return _react2.default.createElement(
 	        'div',
 	        null,
@@ -21522,10 +21548,10 @@
 	    }
 	  }]);
 
-	  return Scrambler;
+	  return Instructions;
 	}(_react2.default.Component);
 
-	exports.default = Scrambler;
+	exports.default = Instructions;
 
 /***/ }
 /******/ ]);

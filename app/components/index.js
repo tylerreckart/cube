@@ -1,12 +1,12 @@
 import React from 'react';
 
-import Scrambler from './scrambler';
+import Instructions from './instructions';
 
 const App = React.createClass ({
   render() {
     return (
       <div>
-        <Scrambler/>
+        <Instructions/>
       </div>
     );
   }
