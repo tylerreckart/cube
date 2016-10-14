@@ -1,4 +1,4 @@
-# C U B E
+# CUBE
 A no-nonsense speedcubing timer and scrambler. Currently only works with 3x3 cubes. 
 
 ## TODO  
