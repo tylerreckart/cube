@@ -21664,7 +21664,7 @@
 	          startTime: new Date(),
 	          running: true
 	        });
-	      }, 3.3);
+	      }, 10);
 	    }
 	  }, {
 	    key: "handleStop",

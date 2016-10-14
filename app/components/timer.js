@@ -51,7 +51,7 @@ class Timer extends React.Component {
         startTime: new Date(),
         running: true
       });
-    }, 3.3);
+    }, 10);
   }
 
   handleStop() {
