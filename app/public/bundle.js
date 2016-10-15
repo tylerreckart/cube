@@ -11134,7 +11134,7 @@ var Instructions = function (_React$Component) {
       var instructions = this.state.instructions;
 
       while (instructions.length < moves.length) {
-        for (var i = 0; i < 5; i++) {
+        for (var i = 0; i < moves.length; i++) {
           instructions.push(moves[i]);
         }
 
@@ -11161,7 +11161,7 @@ var Instructions = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      var instructions = this.state.instructions.join(", ").toString();
+      var instructions = this.state.instructions.join(" ").toString();
 
       return _react2.default.createElement(
         'div',
@@ -11225,8 +11225,9 @@ var Timer = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (Timer.__proto__ || Object.getPrototypeOf(Timer)).call(this, props));
 
     _this.state = {
-      time: 0,
-      running: false
+      running: false,
+      solves: [],
+      time: 0
     };
 
     _this.increment = null;
@@ -11289,9 +11290,18 @@ var Timer = function (_React$Component) {
     key: 'handleStop',
     value: function handleStop() {
       clearInterval(this.increment);
+
       this.setState({
         time: this.state.time,
         running: false
+      });
+
+      var myArr = this.state.solves.slice();
+
+      myArr.push(this.state.time);
+
+      this.setState({
+        solves: myArr
       });
     }
   }, {
@@ -11318,7 +11328,6 @@ var Timer = function (_React$Component) {
         if (e.keyCode == 32) {
           if (_this3.state.running == true) {
             _this3.handleStop();
-            console.log(_this3.state.time);
           } else if (_this3.state.running == false) {
             _this3.handleStart();
           }
@@ -11333,7 +11342,7 @@ var Timer = function (_React$Component) {
           { className: 'timestamp' },
           this.tick(this.state.time)
         ),
-        _react2.default.createElement(_stats2.default, { logTime: this.handleLog.bind(this) })
+        _react2.default.createElement(_stats2.default, { solves: this.state.solves })
       );
     }
   }]);
@@ -21953,7 +21962,7 @@ _reactDom2.default.render(_react2.default.createElement(_index2.default, null), 
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
-"use strict";
+'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -21983,138 +21992,149 @@ var Stats = function (_React$Component) {
 
     _this.state = {
       avg: 0,
-      best: 0,
+      avgTimestamp: '',
+      best: '',
       solves: []
     };
     return _this;
   }
 
   _createClass(Stats, [{
-    key: "calculateTimestamp",
-    value: function calculateTimestamp(time) {
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps() {
+      this.calculateAverage();
+      this.calculateBest();
+    }
+  }, {
+    key: 'calculateTimestamp',
+    value: function calculateTimestamp(elapsed) {
       var min = String(Math.floor(elapsed / 100 / 60) + 100).substring(1);
       var sec = String(Math.floor(elapsed % (100 * 60) / 100));
-      var ms = String(elapsed % 100 + 100).substring(1);
+      var ms = String((elapsed % 100 + 100).toFixed(0)).substring(1);
 
-      return min + ":" + sec + ":" + ms;
-    }
-  }, {
-    key: "calculateAverage",
-    value: function calculateAverage(time) {
-      // do something
-    }
-  }, {
-    key: "render",
-    value: function render() {
-      if (this.state.avg > 0) {
-        var avg = calculateTimestamp(this.state.avg);
-      } else {
-        var avg = '--:--:--';
+      if (sec < 10) {
+        sec = "0" + sec;
       }
 
-      if (this.state.best > 0) {
-        var avg = calculateTimestamp(this.state.best);
+      var timestamp = min + ":" + sec + ":" + ms;
+
+      return timestamp;
+    }
+  }, {
+    key: 'calculateAverage',
+    value: function calculateAverage() {
+      var solves = this.props.solves;
+      var sum = 0;
+
+      for (var i = 0; i < solves.length; i++) {
+        sum += solves[i];
+      }
+
+      var avg = sum / solves.length;
+
+      this.setState({
+        avg: avg,
+        avgTimestamp: this.calculateTimestamp(avg)
+      });
+    }
+  }, {
+    key: 'calculateBest',
+    value: function calculateBest() {
+      var solves = this.props.solves;
+      var best = Math.min.apply(Math, solves);
+
+      this.setState({
+        best: this.calculateTimestamp(best)
+      });
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      if (this.state.avg > 0) {
+        var avg = this.state.avgTimestamp;
+        var best = this.state.best;
       } else {
+        var avg = '--:--:--';
         var best = '--:--:--';
       }
 
-      if (this.state.solves.length >= 3) {
-        var avg = calculateAverage(this.state.solves);
-      } else {
-        var avgOf3 = '--:--:--';
-      }
-
-      if (this.state.solves.length >= 5) {
-        var avg = calculateAverage(this.state.solves);
-      } else {
-        var avgOf5 = '--:--:--';
-      }
-
-      if (this.state.solves.length >= 10) {
-        var avg = calculateAverage(this.state.solves);
-      } else {
-        var avgOf10 = '--:--:--';
-      }
-
-      if (this.state.solves.length >= 12) {
-        var avg = calculateAverage(this.state.solves);
-      } else {
-        var avgOf12 = '--:--:--';
-      }
-
       return _react2.default.createElement(
-        "table",
-        { className: "stat-box" },
+        'table',
+        { className: 'stat-box' },
         _react2.default.createElement(
-          "tr",
+          'tbody',
           null,
           _react2.default.createElement(
-            "td",
+            'tr',
             null,
-            "Average:"
+            _react2.default.createElement(
+              'td',
+              null,
+              'Average:'
+            ),
+            _react2.default.createElement(
+              'td',
+              null,
+              avg
+            ),
+            _react2.default.createElement(
+              'td',
+              null,
+              'Best'
+            ),
+            _react2.default.createElement(
+              'td',
+              null,
+              best
+            )
           ),
           _react2.default.createElement(
-            "td",
+            'tr',
             null,
-            avg
+            _react2.default.createElement(
+              'td',
+              null,
+              'Average of 3:'
+            ),
+            _react2.default.createElement(
+              'td',
+              null,
+              '--:--:--'
+            ),
+            _react2.default.createElement(
+              'td',
+              null,
+              'Average of 10:'
+            ),
+            _react2.default.createElement(
+              'td',
+              null,
+              '--:--:--'
+            )
           ),
           _react2.default.createElement(
-            "td",
+            'tr',
             null,
-            "Best"
-          ),
-          _react2.default.createElement(
-            "td",
-            null,
-            best
-          )
-        ),
-        _react2.default.createElement(
-          "tr",
-          null,
-          _react2.default.createElement(
-            "td",
-            null,
-            "Average of 3:"
-          ),
-          _react2.default.createElement(
-            "td",
-            null,
-            avgOf3
-          ),
-          _react2.default.createElement(
-            "td",
-            null,
-            "Average of 10:"
-          ),
-          _react2.default.createElement(
-            "td",
-            null,
-            avgOf10
-          )
-        ),
-        _react2.default.createElement(
-          "tr",
-          null,
-          _react2.default.createElement(
-            "td",
-            null,
-            "Average of 5:"
-          ),
-          _react2.default.createElement(
-            "td",
-            null,
-            avgOf5
-          ),
-          _react2.default.createElement(
-            "td",
-            null,
-            "Average of 12:"
-          ),
-          _react2.default.createElement(
-            "td",
-            null,
-            avgOf12
+            _react2.default.createElement(
+              'td',
+              null,
+              'Average of 5:'
+            ),
+            _react2.default.createElement(
+              'td',
+              null,
+              '--:--:--'
+            ),
+            _react2.default.createElement(
+              'td',
+              null,
+              'Average of 12:'
+            ),
+            _react2.default.createElement(
+              'td',
+              null,
+              '--:--:--'
+            )
           )
         )
       );
@@ -22123,6 +22143,10 @@ var Stats = function (_React$Component) {
 
   return Stats;
 }(_react2.default.Component);
+
+Stats.propTypes = {
+  solves: _react2.default.PropTypes.array.isRequired
+};
 
 exports.default = Stats;
 
@@ -22137,7 +22161,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 var puzzles = {
-  'three': ['R', 'R2', 'R' + "'", '2R' + "'", 'L', 'L2', 'L' + "'", '2L' + "'", 'U', 'U2', 'U' + "'", '2U' + "'", 'D', 'D2', 'D' + "'", '2D' + "'", 'F', 'F2', 'F' + "'", '2F' + "'", 'B', 'B2', 'B' + "'", '2B' + "'"]
+  'three': ['R', 'R2', 'R' + "'", 'R2' + "'", 'L', 'L2', 'L' + "'", 'L2' + "'", 'U', 'U2', 'U' + "'", 'U2' + "'", 'D', 'D2', 'D' + "'", 'D2' + "'", 'F', 'F2', 'F' + "'", 'F2' + "'", 'B', 'B2', 'B' + "'", 'B2' + "'"]
 };
 
 exports.default = puzzles;

@@ -7,8 +7,9 @@ class Timer extends React.Component {
     super(props);
 
     this.state = {
+      running: false,
+      solves: [],
       time: 0,
-      running: false
     }
 
     this.increment = null;
@@ -64,9 +65,18 @@ class Timer extends React.Component {
 
   handleStop() {
     clearInterval(this.increment);
+
     this.setState({
       time: this.state.time,
       running: false
+    });
+
+    var myArr = this.state.solves.slice();
+
+    myArr.push(this.state.time);
+
+    this.setState({
+      solves: myArr
     });
   }
 
@@ -88,7 +98,6 @@ class Timer extends React.Component {
       if (e.keyCode == 32) {
         if (this.state.running == true) {
           this.handleStop();
-          console.log(this.state.time);
         } else if (this.state.running == false) {
           this.handleStart();
         }
@@ -99,7 +108,7 @@ class Timer extends React.Component {
       <div>
         <h1 className="timestamp">{this.tick(this.state.time)}</h1>
         {/* <button className="btn reset-btn" onClick={this.handleReset.bind(this)}>Reset</button> */}
-        <Stats logTime={this.handleLog.bind(this)}/>
+        <Stats solves={this.state.solves}/>
       </div>
     );
   }

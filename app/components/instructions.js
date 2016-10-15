@@ -21,7 +21,7 @@ class Instructions extends React.Component {
     var instructions = this.state.instructions;
 
     while (instructions.length < moves.length) {
-      for (var i = 0; i < 5; i++) {
+      for (var i = 0; i < moves.length; i++) {
         instructions.push(moves[i]);
       }
 
@@ -45,7 +45,7 @@ class Instructions extends React.Component {
   }
 
   render() {
-    var instructions = this.state.instructions.join(", ").toString();
+    var instructions = this.state.instructions.join(" ").toString();
 
     return (
       <div className="instructions-container">
