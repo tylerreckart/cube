@@ -11057,7 +11057,6 @@ var App = function (_React$Component) {
       return _react2.default.createElement(
         'div',
         null,
-        _react2.default.createElement(_instructions2.default, null),
         _react2.default.createElement(_timer2.default, null)
       );
     }
@@ -11152,7 +11151,7 @@ var Instructions = function (_React$Component) {
       var instructions = this.state.instructions.join(" ").toString();
 
       document.addEventListener('keypress', function (e) {
-        if (e.keyCode == 32) {
+        if (e.keyCode == 32 && _this2.props.isRunning == true) {
           _this2.generateInstructions();
         }
       });
@@ -11178,6 +11177,10 @@ var Instructions = function (_React$Component) {
   return Instructions;
 }(_react2.default.Component);
 
+Instructions.propTypes = {
+  isRunning: _react2.default.PropTypes.bool.isRequired
+};
+
 exports.default = Instructions;
 
 /***/ },
@@ -11197,6 +11200,10 @@ var _createClass = function () { function defineProperties(target, props) { for 
 var _react = __webpack_require__(20);
 
 var _react2 = _interopRequireDefault(_react);
+
+var _instructions = __webpack_require__(89);
+
+var _instructions2 = _interopRequireDefault(_instructions);
 
 var _stats = __webpack_require__(176);
 
@@ -11316,6 +11323,7 @@ var Timer = function (_React$Component) {
       return _react2.default.createElement(
         'div',
         null,
+        _react2.default.createElement(_instructions2.default, { isRunning: this.state.running }),
         _react2.default.createElement(
           'h1',
           { className: 'timestamp' },

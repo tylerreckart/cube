@@ -31,7 +31,7 @@ class Instructions extends React.Component {
     var instructions = this.state.instructions.join(" ").toString();
 
     document.addEventListener('keypress', (e) => {
-      if (e.keyCode == 32) {
+      if (e.keyCode == 32 && this.props.isRunning == true) {
         this.generateInstructions();
       }
     });
@@ -42,6 +42,10 @@ class Instructions extends React.Component {
       </div>
     );
   }
+}
+
+Instructions.propTypes = {
+  isRunning: React.PropTypes.bool.isRequired
 }
 
 export default Instructions;

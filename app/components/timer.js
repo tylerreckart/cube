@@ -1,5 +1,6 @@
 import React from 'react';
 
+import Instructions from './instructions';
 import Stats from './stats';
 
 class Timer extends React.Component {
@@ -93,6 +94,7 @@ class Timer extends React.Component {
 
     return (
       <div>
+        <Instructions isRunning={this.state.running}/>
         <h1 className="timestamp">{this.tick(this.state.time)}</h1>
         <Stats solves={this.state.solves}/>
       </div>
