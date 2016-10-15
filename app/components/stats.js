@@ -79,26 +79,42 @@ class Stats extends React.Component {
       var best = '--:--:--';
     }
 
-    if (this.props.solves.length !== 3) {
-      var avgOf3 = this.state.avgOf3;
+    if (this.props.solves.length >= 2) {
+      if (this.state.avgOf3 !== '') {
+        var avgOf3 = this.state.avgOf3;
+      } else {
+        var avgOf3 = '--:--:--';
+      }
     } else {
       var avgOf3 = '--:--:--';
     }
 
-    if (this.props.solves.length !== 5) {
-      var avgOf5 = this.state.avgOf5;
+    if (this.props.solves.length >= 4) {
+      if (this.state.avgOf5 !== '') {
+        var avgOf5 = this.state.avgOf5;
+      } else {
+        var avgOf5 = '--:--:--';
+      }
     } else {
       var avgOf5 = '--:--:--';
     }
 
-    if (this.props.solves.length !== 10) {
-      var avgOf10 = this.state.avgOf10;
+    if (this.props.solves.length >= 9) {
+      if (this.state.avgOf10 !== '') {
+        var avgOf10 = this.state.avgOf10;
+      } else {
+        var avgOf10 = '--:--:--';
+      }
     } else {
       var avgOf10 = '--:--:--';
     }
 
-    if (this.props.solves.length !== 12) {
-      var avgOf12 = this.state.avgOf12;
+    if (this.props.solves.length >= 11) {
+      if (this.state.avgOf12 !== '') {
+        var avgOf12 = this.state.avgOf12;
+      } else {
+        var avgOf12 = '--:--:--';
+      }
     } else {
       var avgOf12 = '--:--:--';
     }
