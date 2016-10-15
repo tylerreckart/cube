@@ -80,19 +80,6 @@ class Timer extends React.Component {
     });
   }
 
-  handleLog() {
-    var time = this.state.time;
-  }
-
-  handleReset() {
-    clearInterval(this.increment);
-    this.setState({
-      time: 0,
-      laps: [],
-      running: false
-    });
-  }
-
   render() {
     document.body.onkeyup = (e) => {
       if (e.keyCode == 32) {
@@ -107,7 +94,6 @@ class Timer extends React.Component {
     return (
       <div>
         <h1 className="timestamp">{this.tick(this.state.time)}</h1>
-        {/* <button className="btn reset-btn" onClick={this.handleReset.bind(this)}>Reset</button> */}
         <Stats solves={this.state.solves}/>
       </div>
     );

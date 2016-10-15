@@ -11147,7 +11147,15 @@ var Instructions = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
+      var _this2 = this;
+
       var instructions = this.state.instructions.join(" ").toString();
+
+      document.addEventListener('keypress', function (e) {
+        if (e.keyCode == 32) {
+          _this2.generateInstructions();
+        }
+      });
 
       return _react2.default.createElement(
         'div',
@@ -11288,21 +11296,6 @@ var Timer = function (_React$Component) {
 
       this.setState({
         solves: myArr
-      });
-    }
-  }, {
-    key: 'handleLog',
-    value: function handleLog() {
-      var time = this.state.time;
-    }
-  }, {
-    key: 'handleReset',
-    value: function handleReset() {
-      clearInterval(this.increment);
-      this.setState({
-        time: 0,
-        laps: [],
-        running: false
       });
     }
   }, {

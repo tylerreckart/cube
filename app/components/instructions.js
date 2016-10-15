@@ -30,6 +30,12 @@ class Instructions extends React.Component {
   render() {
     var instructions = this.state.instructions.join(" ").toString();
 
+    document.addEventListener('keypress', (e) => {
+      if (e.keyCode == 32) {
+        this.generateInstructions();
+      }
+    });
+
     return (
       <div className="instructions-container">
         <h3 className="instructions"><strong>Scramble:</strong> {instructions}</h3>
