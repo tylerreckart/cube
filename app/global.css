@@ -61,6 +61,19 @@ body {
   letter-spacing: 0.05em;
 }
 
+.instructions strong {
+  letter-spacing: 0;
+}
+
+table {
+  text-align: left;
+}
+
+.stat-box {
+  margin: 0 auto;
+  width: 350px;
+}
+
 .timestamp {
   color: black;
   font-size: 15em;

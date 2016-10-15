@@ -1,5 +1,7 @@
 import React from 'react';
 
+import Stats from './stats';
+
 class Timer extends React.Component {
   constructor(props) {
     super(props);
@@ -68,6 +70,10 @@ class Timer extends React.Component {
     });
   }
 
+  handleLog() {
+    var time = this.state.time;
+  }
+
   handleReset() {
     clearInterval(this.increment);
     this.setState({
@@ -92,7 +98,8 @@ class Timer extends React.Component {
     return (
       <div>
         <h1 className="timestamp">{this.tick(this.state.time)}</h1>
-        <button className="btn reset-btn" onClick={this.handleReset.bind(this)}>Reset</button>
+        {/* <button className="btn reset-btn" onClick={this.handleReset.bind(this)}>Reset</button> */}
+        <Stats logTime={this.handleLog.bind(this)}/>
       </div>
     );
   }

@@ -1,18 +1,13 @@
 import React from 'react';
 
+import puzzles from '../utils/puzzles';
+
 class Instructions extends React.Component {
   constructor() {
     super();
 
     this.state = {
-      moves: [
-        'R', 'R2', 'R' + "'", '2R' + "'",
-        'L', 'L2', 'L' + "'", '2L' + "'",
-        'U', 'U2', 'U' + "'", '2U' + "'",
-        'D', 'D2', 'D' + "'", '2D' + "'",
-        'F', 'F2', 'F' + "'", '2F' + "'",
-        'B', 'B2', 'B' + "'", '2B' + "'"
-      ],
+      moves: [ puzzles.three ],
       instructions: []
     }
   }
@@ -22,11 +17,11 @@ class Instructions extends React.Component {
   }
 
   generateInstructions() {
-    var moves = this.state.moves;
+    var moves = this.state.moves[0];
     var instructions = this.state.instructions;
 
     while (instructions.length < moves.length) {
-      for (var i = 0; i < moves.length; i++) {
+      for (var i = 0; i < 5; i++) {
         instructions.push(moves[i]);
       }
 
@@ -47,8 +42,6 @@ class Instructions extends React.Component {
     this.setState({
       instructions: instructions
     });
-
-    console.log(this.state.instructions);
   }
 
   render() {
@@ -56,7 +49,7 @@ class Instructions extends React.Component {
 
     return (
       <div className="instructions-container">
-        <h3 className="instructions">{instructions}</h3>
+        <h3 className="instructions"><strong>Scramble:</strong> {instructions}</h3>
       </div>
     );
   }
