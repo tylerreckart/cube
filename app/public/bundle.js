@@ -21993,6 +21993,10 @@ var Stats = function (_React$Component) {
     _this.state = {
       avg: 0,
       avgTimestamp: '',
+      avgOf3: '',
+      avgOf5: '',
+      avgOf10: '',
+      avgOf12: '',
       best: '',
       solves: []
     };
@@ -22036,6 +22040,16 @@ var Stats = function (_React$Component) {
         avg: avg,
         avgTimestamp: this.calculateTimestamp(avg)
       });
+
+      if (solves.length == 3) {
+        this.setState({ avgOf3: this.calculateTimestamp(avg) });
+      } else if (solves.length == 5) {
+        this.setState({ avgOf5: this.calculateTimestamp(avg) });
+      } else if (solves.length == 10) {
+        this.setState({ avgOf10: this.calculateTimestamp(avg) });
+      } else if (solves.length == 12) {
+        this.setState({ avgOf12: this.calculateTimestamp(avg) });
+      }
     }
   }, {
     key: 'calculateBest',
@@ -22056,6 +22070,30 @@ var Stats = function (_React$Component) {
       } else {
         var avg = '--:--:--';
         var best = '--:--:--';
+      }
+
+      if (this.props.solves.length !== 3) {
+        var avgOf3 = this.state.avgOf3;
+      } else {
+        var avgOf3 = '--:--:--';
+      }
+
+      if (this.props.solves.length !== 5) {
+        var avgOf5 = this.state.avgOf5;
+      } else {
+        var avgOf5 = '--:--:--';
+      }
+
+      if (this.props.solves.length !== 10) {
+        var avgOf10 = this.state.avgOf10;
+      } else {
+        var avgOf10 = '--:--:--';
+      }
+
+      if (this.props.solves.length !== 12) {
+        var avgOf12 = this.state.avgOf12;
+      } else {
+        var avgOf12 = '--:--:--';
       }
 
       return _react2.default.createElement(
@@ -22099,7 +22137,7 @@ var Stats = function (_React$Component) {
             _react2.default.createElement(
               'td',
               null,
-              '--:--:--'
+              avgOf3
             ),
             _react2.default.createElement(
               'td',
@@ -22109,7 +22147,7 @@ var Stats = function (_React$Component) {
             _react2.default.createElement(
               'td',
               null,
-              '--:--:--'
+              avgOf10
             )
           ),
           _react2.default.createElement(
@@ -22123,7 +22161,7 @@ var Stats = function (_React$Component) {
             _react2.default.createElement(
               'td',
               null,
-              '--:--:--'
+              avgOf5
             ),
             _react2.default.createElement(
               'td',
@@ -22133,7 +22171,7 @@ var Stats = function (_React$Component) {
             _react2.default.createElement(
               'td',
               null,
-              '--:--:--'
+              avgOf12
             )
           )
         )

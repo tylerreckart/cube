@@ -7,6 +7,10 @@ class Stats extends React.Component {
     this.state = {
       avg: 0,
       avgTimestamp: '',
+      avgOf3: '',
+      avgOf5: '',
+      avgOf10: '',
+      avgOf12: '',
       best: '',
       solves: [],
     }
@@ -45,6 +49,16 @@ class Stats extends React.Component {
       avg: avg,
       avgTimestamp: this.calculateTimestamp(avg)
     });
+
+    if (solves.length == 3) {
+      this.setState({ avgOf3: this.calculateTimestamp(avg) });
+    } else if (solves.length == 5) {
+      this.setState({ avgOf5: this.calculateTimestamp(avg) });
+    } else if (solves.length == 10) {
+      this.setState({ avgOf10: this.calculateTimestamp(avg) });
+    } else if (solves.length == 12) {
+      this.setState({ avgOf12: this.calculateTimestamp(avg) });
+    }
   }
 
   calculateBest() {
@@ -65,6 +79,30 @@ class Stats extends React.Component {
       var best = '--:--:--';
     }
 
+    if (this.props.solves.length !== 3) {
+      var avgOf3 = this.state.avgOf3;
+    } else {
+      var avgOf3 = '--:--:--';
+    }
+
+    if (this.props.solves.length !== 5) {
+      var avgOf5 = this.state.avgOf5;
+    } else {
+      var avgOf5 = '--:--:--';
+    }
+
+    if (this.props.solves.length !== 10) {
+      var avgOf10 = this.state.avgOf10;
+    } else {
+      var avgOf10 = '--:--:--';
+    }
+
+    if (this.props.solves.length !== 12) {
+      var avgOf12 = this.state.avgOf12;
+    } else {
+      var avgOf12 = '--:--:--';
+    }
+
     return (
       <table className="stat-box">
         <tbody>
@@ -73,12 +111,12 @@ class Stats extends React.Component {
             <td>Best</td><td>{best}</td>
           </tr>
           <tr>
-            <td>Average of 3:</td><td>--:--:--</td>
-            <td>Average of 10:</td><td>--:--:--</td>
+            <td>Average of 3:</td><td>{avgOf3}</td>
+            <td>Average of 10:</td><td>{avgOf10}</td>
           </tr>
           <tr>
-            <td>Average of 5:</td><td>--:--:--</td>
-            <td>Average of 12:</td><td>--:--:--</td>
+            <td>Average of 5:</td><td>{avgOf5}</td>
+            <td>Average of 12:</td><td>{avgOf12}</td>
           </tr>
         </tbody>
       </table>
