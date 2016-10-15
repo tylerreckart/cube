@@ -19,18 +19,10 @@ class Timer extends React.Component {
     })
   }
 
-  tick() {
-    var elapsedTime = Date.now() - this.state.startTime + this.state.diff;
-
-    this.setState({
-      time: elapsedTime
-    });
-  }
-
-  getTimestamp() {
-    var min = String(Math.floor(this.state.time / 100 / 60) + 100).substring(1);
-    var sec = String(Math.floor((this.state.time %(100*60))/100));
-    var ms = String(this.state.time % 100 + 100).substring(1);
+  tick(elapsed) {
+    var min = String(Math.floor(elapsed / 100 / 60) + 100).substring(1);
+    var sec = String(Math.floor((elapsed % (100 * 60)) / 100));
+    var ms = String(elapsed % 100 + 100).substring(1);
 
     if (sec < 10) {
       sec = "0" + sec;
@@ -42,7 +34,6 @@ class Timer extends React.Component {
   }
 
   handleStart() {
-
     this.increment = setInterval(() => {
       this.setState({
         time: this.state.time + 1,
@@ -91,8 +82,7 @@ class Timer extends React.Component {
       if (e.keyCode == 32) {
         if (this.state.running == true) {
           this.handleStop();
-
-          console.log(this.getTimestamp())
+          console.log(this.state.time);
         } else if (this.state.running == false) {
           this.handleStart();
         }
@@ -101,7 +91,7 @@ class Timer extends React.Component {
 
     return (
       <div>
-        <h1 className="timestamp">{this.getTimestamp()}</h1>
+        <h1 className="timestamp">{this.tick(this.state.time)}</h1>
         <button className="btn reset-btn" onClick={this.handleReset.bind(this)}>Reset</button>
       </div>
     );
