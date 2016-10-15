@@ -4,7 +4,7 @@ A no-nonsense speedcubing timer and scrambler. Currently only works with 3x3 cub
 ## Todo  
 - [x] Log average time over 3, 5, and 10 solves
 - [ ] Allow users select an inspection timeframe before the timer starts
-- [ ] Regenerate scramble algorithm on timer stop
+- [x] Regenerate scramble algorithm on timer stop
 - [ ] Allow users to choose between more cube sizes
 - [ ] Dark mode
 - [ ] Data visualization?
