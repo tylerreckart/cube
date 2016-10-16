@@ -10,6 +10,7 @@ class Timer extends React.Component {
     this.state = {
       running: false,
       solves: [],
+      start: 0,
       time: 0,
     }
 
@@ -26,7 +27,7 @@ class Timer extends React.Component {
   tick(elapsed) {
     var min = String(Math.floor(elapsed / 100 / 60) + 100).substring(1);
     var sec = String(Math.floor((elapsed % (100 * 60)) / 100));
-    var ms = String(elapsed % 100 + 100).substring(1);
+    var ms = String(elapsed % 1000 + 100).substring(1);
 
     if (sec < 10) {
       sec = "0" + sec;
@@ -38,27 +39,35 @@ class Timer extends React.Component {
   }
 
   handleStart() {
+    this.setState({
+      start: Date.now(),
+    });
+
+    var interval = 100;
     this.increment = setInterval(() => {
+      var delta = Date.now() - this.state.start;
       this.setState({
-        time: this.state.time + 1,
+        time: delta,
         running: true
       });
-    }, 10);
+    }, interval);
+
 
     if (this.state.time > 0) {
       clearInterval(this.increment);
 
       this.setState({
+        start: Date.now(),
         time: 0
       });
 
       this.increment = setInterval(() => {
+        var delta = Date.now() - this.state.start;
         this.setState({
-          time: this.state.time + 1,
+          time: delta,
           running: true
         });
-      }, 10);
-
+      }, interval);
     } else {
       this.increment;
     }
