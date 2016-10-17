@@ -21506,10 +21506,6 @@
 
 	var _scrambo2 = _interopRequireDefault(_scrambo);
 
-	var _puzzles = __webpack_require__(182);
-
-	var _puzzles2 = _interopRequireDefault(_puzzles);
-
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -21528,7 +21524,11 @@
 
 	    _this.state = {
 	      instructions: [],
-	      options: [{ _id: 0, value: '333', text: '3x3' }, { _id: 1, value: '222', text: '2x2' }, { _id: 2, value: '444', text: '4x4' }, { _id: 3, value: '555', text: '5x5' }, { _id: 4, value: '666', text: '6x6' }, { _id: 5, value: '777', text: '7x7' }],
+	      interfaceModes: [{ _id: 0, value: 'light', text: 'Light' }, { _id: 1, value: 'dark', text: 'Dark' }],
+	      interfaceMode: 'light',
+	      options: [{ _id: 0, value: 222, text: '2x2' }, { _id: 1, value: 333, text: '3x3' }, { _id: 2, value: 444, text: '4x4' }, { _id: 3, value: 555, text: '5x5' }, { _id: 4, value: 666, text: '6x6' }, { _id: 5, value: 777, text: '7x7' }],
+	      inspectionTime: 0,
+	      inspectionTimes: [{ _id: 0, value: 0, text: 'No Inspection' }, { _id: 1, value: 0, text: '3 Seconds' }, { _id: 2, value: 5, text: '5 Seconds' }, { _id: 3, value: 10, text: '10 Seconds' }, { _id: 4, value: 15, text: '15 Seconds' }],
 	      value: '333'
 	    };
 	    return _this;
@@ -21549,7 +21549,7 @@
 	  }, {
 	    key: 'generateInstructions',
 	    value: function generateInstructions() {
-	      var instructions = new _scrambo2.default().type('333').get();
+	      var instructions = new _scrambo2.default().type(this.state.value).get();
 
 	      this.setState({
 	        instructions: instructions
@@ -21558,11 +21558,32 @@
 	  }, {
 	    key: 'handleCubeSizeChange',
 	    value: function handleCubeSizeChange(e) {
-	      // this.setState({
-	      //   value: e.target.value
-	      // });
+	      this.setState({
+	        value: e.target.value
+	      });
 
-	      console.log(this.state.value);
+	      this.generateInstructions();
+	      // console.log(this.state.value);
+	    }
+	  }, {
+	    key: 'handleInspectionTimeChange',
+	    value: function handleInspectionTimeChange(e) {
+	      this.setState({
+	        inspectionTime: e.target.value
+	      });
+
+	      this.generateInstructions();
+	      // console.log(this.state.inspectionTime);
+	    }
+	  }, {
+	    key: 'handleInterfaceModeChange',
+	    value: function handleInterfaceModeChange(e) {
+	      this.setState({
+	        inspectionTime: e.target.value
+	      });
+
+	      this.generateInstructions();
+	      // console.log(this.state.inspectionTime);
 	    }
 	  }, {
 	    key: 'render',
@@ -21577,15 +21598,29 @@
 	        }
 	      });
 
+	      function mapDropdownOptions(array) {
+	        // console.log(array);
+	        array.map(function (option) {
+	          return _react2.default.createElement(
+	            'option',
+	            {
+	              key: option._id,
+	              value: option.value
+	            },
+	            option.text
+	          );
+	        });
+	      }
+
 	      return _react2.default.createElement(
 	        'div',
 	        null,
 	        _react2.default.createElement(
 	          'div',
-	          { className: 'controls' },
+	          { className: 'row controls' },
 	          _react2.default.createElement(
 	            'div',
-	            { className: '' },
+	            { className: 'control-block' },
 	            _react2.default.createElement(
 	              'h3',
 	              null,
@@ -21593,17 +21628,36 @@
 	            ),
 	            _react2.default.createElement(
 	              'select',
-	              { id: 'js-cube-size', value: this.state.value, onChange: this.handleCubeSizeChange() },
-	              this.state.options.map(function (option) {
-	                return _react2.default.createElement(
-	                  'option',
-	                  {
-	                    key: option._id,
-	                    value: option.value
-	                  },
-	                  option.text
-	                );
-	              })
+	              { value: this.state.value, onChange: this.handleCubeSizeChange.bind(this) },
+	              mapDropdownOptions(this.state.options)
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'control-block' },
+	            _react2.default.createElement(
+	              'h3',
+	              null,
+	              'Inspection Time:'
+	            ),
+	            _react2.default.createElement(
+	              'select',
+	              { value: this.state.inspectionTime, onChange: this.handleInspectionTimeChange.bind(this) },
+	              mapDropdownOptions(this.state.inspectionTimes)
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'control-block' },
+	            _react2.default.createElement(
+	              'h3',
+	              null,
+	              'Interface Mode:'
+	            ),
+	            _react2.default.createElement(
+	              'select',
+	              { value: this.state.interfaceMode, onChange: this.handleInterfaceModeChange.bind(this) },
+	              mapDropdownOptions(this.state.interfaceModes)
 	            )
 	          )
 	        ),
@@ -23232,21 +23286,7 @@
 	module.exports = scrambler;
 
 /***/ },
-/* 182 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	var puzzles = {
-	  'three': ['R', 'R2', 'R' + "'", 'R2' + "'", 'L', 'L2', 'L' + "'", 'L2' + "'", 'U', 'U2', 'U' + "'", 'U2' + "'", 'D', 'D2', 'D' + "'", 'D2' + "'", 'F', 'F2', 'F' + "'", 'F2' + "'", 'B', 'B2', 'B' + "'", 'B2' + "'"]
-	};
-
-	exports.default = puzzles;
-
-/***/ },
+/* 182 */,
 /* 183 */
 /***/ function(module, exports, __webpack_require__) {
 
