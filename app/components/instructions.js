@@ -16,7 +16,7 @@ class Instructions extends React.Component {
         { _id: 4, value: '666', text: '6x6' },
         { _id: 5, value: '777', text: '7x7' },
       ],
-      value: ''
+      value: '333'
     };
   }
 
@@ -38,14 +38,12 @@ class Instructions extends React.Component {
     });
   }
 
-  handleCubeSizeChange() {
-    var value = document.querySelector('#js-cube-size');
-
+  handleCubeSizeChange(e) {
     // this.setState({
-    //   value: value
+    //   value: e.target.value
     // });
 
-    console.log(value);
+    console.log(this.state.value);
   }
 
   render() {
@@ -62,7 +60,7 @@ class Instructions extends React.Component {
         <div className="controls">
           <div className="">
             <h3>Cube Size:</h3>
-            <select id="js-cube-size" onChange={this.handleCubeSizeChange()}>
+            <select id="js-cube-size" value={this.state.value} onChange={this.handleCubeSizeChange()}>
               {
                 this.state.options.map((option) => {
                   return (
@@ -75,20 +73,6 @@ class Instructions extends React.Component {
                 }
             </select>
           </div>
-
-          {/* <div className="">
-            <h3>Inspection Time:</h3>
-            <select>
-              <option value="10">10 Seconds</option>
-            </select>
-          </div>
-
-          <div className="">
-            <h3>Interface Mode:</h3>
-            <select>
-              <option value="light">Light</option>
-            </select>
-          </div> */}
         </div>
 
         <div className="instructions-container">
