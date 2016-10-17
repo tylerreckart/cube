@@ -21598,20 +21598,6 @@
 	        }
 	      });
 
-	      function mapDropdownOptions(array) {
-	        // console.log(array);
-	        array.map(function (option) {
-	          return _react2.default.createElement(
-	            'option',
-	            {
-	              key: option._id,
-	              value: option.value
-	            },
-	            option.text
-	          );
-	        });
-	      }
-
 	      return _react2.default.createElement(
 	        'div',
 	        null,
@@ -21629,7 +21615,16 @@
 	            _react2.default.createElement(
 	              'select',
 	              { value: this.state.value, onChange: this.handleCubeSizeChange.bind(this) },
-	              mapDropdownOptions(this.state.options)
+	              this.state.options.map(function (option) {
+	                return _react2.default.createElement(
+	                  'option',
+	                  {
+	                    key: option._id,
+	                    value: option.value
+	                  },
+	                  option.text
+	                );
+	              })
 	            )
 	          ),
 	          _react2.default.createElement(
@@ -21643,7 +21638,16 @@
 	            _react2.default.createElement(
 	              'select',
 	              { value: this.state.inspectionTime, onChange: this.handleInspectionTimeChange.bind(this) },
-	              mapDropdownOptions(this.state.inspectionTimes)
+	              this.state.inspectionTimes.map(function (option) {
+	                return _react2.default.createElement(
+	                  'option',
+	                  {
+	                    key: option._id,
+	                    value: option.value
+	                  },
+	                  option.text
+	                );
+	              })
 	            )
 	          ),
 	          _react2.default.createElement(
@@ -21657,7 +21661,16 @@
 	            _react2.default.createElement(
 	              'select',
 	              { value: this.state.interfaceMode, onChange: this.handleInterfaceModeChange.bind(this) },
-	              mapDropdownOptions(this.state.interfaceModes)
+	              this.state.interfaceModes.map(function (option) {
+	                return _react2.default.createElement(
+	                  'option',
+	                  {
+	                    key: option._id,
+	                    value: option.value
+	                  },
+	                  option.text
+	                );
+	              })
 	            )
 	          )
 	        ),

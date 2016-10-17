@@ -85,39 +85,54 @@ class Instructions extends React.Component {
       }
     });
 
-    function mapDropdownOptions(array) {
-      // console.log(array);
-      array.map((option) => {
-        return (
-          <option
-            key={option._id}
-            value={option.value}
-            >{option.text}</option>
-          )
-        })
-    }
-
     return (
       <div>
         <div className="row controls">
           <div className="control-block">
             <h3>Cube Size:</h3>
             <select value={this.state.value} onChange={this.handleCubeSizeChange.bind(this)}>
-              {mapDropdownOptions(this.state.options)}
+              {
+                this.state.options.map((option) => {
+                  return (
+                    <option
+                      key={option._id}
+                      value={option.value}
+                      >{option.text}</option>
+                  )
+                })
+              }
             </select>
           </div>
 
           <div className="control-block">
             <h3>Inspection Time:</h3>
             <select value={this.state.inspectionTime} onChange={this.handleInspectionTimeChange.bind(this)}>
-              {mapDropdownOptions(this.state.inspectionTimes)}
+              {
+                this.state.inspectionTimes.map((option) => {
+                  return (
+                    <option
+                      key={option._id}
+                      value={option.value}
+                      >{option.text}</option>
+                  )
+                })
+              }
             </select>
           </div>
 
           <div className="control-block">
             <h3>Interface Mode:</h3>
             <select value={this.state.interfaceMode} onChange={this.handleInterfaceModeChange.bind(this)}>
-              {mapDropdownOptions(this.state.interfaceModes)}
+              {
+                this.state.interfaceModes.map((option) => {
+                  return (
+                    <option
+                      key={option._id}
+                      value={option.value}
+                      >{option.text}</option>
+                  )
+                })
+              }
             </select>
           </div>
         </div>
