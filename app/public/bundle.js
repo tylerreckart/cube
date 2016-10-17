@@ -21528,7 +21528,7 @@
 
 	    _this.state = {
 	      instructions: [],
-	      options: [{ _id: 0, value: '222', text: '2x2' }, { _id: 1, value: '333', text: '3x3' }, { _id: 2, value: '444', text: '4x4' }, { _id: 3, value: '555', text: '5x5' }, { _id: 4, value: '666', text: '6x6' }, { _id: 5, value: '777', text: '7x7' }],
+	      options: [{ _id: 0, value: '333', text: '3x3' }, { _id: 1, value: '222', text: '2x2' }, { _id: 2, value: '444', text: '4x4' }, { _id: 3, value: '555', text: '5x5' }, { _id: 4, value: '666', text: '6x6' }, { _id: 5, value: '777', text: '7x7' }],
 	      value: ''
 	    };
 	    return _this;
@@ -21557,7 +21557,9 @@
 	    }
 	  }, {
 	    key: 'handleCubeSizeChange',
-	    value: function handleCubeSizeChange(value) {
+	    value: function handleCubeSizeChange() {
+	      var value = document.querySelector('#js-cube-size');
+
 	      // this.setState({
 	      //   value: value
 	      // });
@@ -21589,7 +21591,7 @@
 	            _react2.default.createElement(
 	              'h3',
 	              null,
-	              'Cube Size'
+	              'Cube Size:'
 	            ),
 	            _react2.default.createElement(
 	              'select',
@@ -21750,13 +21752,13 @@
 	      console.log(this.state.time);
 
 	      this.setState({
-	        time: this.state.time / 10,
+	        time: this.state.time,
 	        running: false
 	      });
 
 	      var myArr = this.state.solves.slice();
 
-	      myArr.push(this.state.time);
+	      myArr.push(Math.floor(this.state.time / 10));
 
 	      this.setState({
 	        solves: myArr

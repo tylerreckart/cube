@@ -75,13 +75,13 @@ class Timer extends React.Component {
     console.log(this.state.time)
 
     this.setState({
-      time: this.state.time / 10,
+      time: this.state.time,
       running: false
     });
 
     var myArr = this.state.solves.slice();
 
-    myArr.push(this.state.time);
+    myArr.push(Math.floor(this.state.time / 10));
 
     this.setState({
       solves: myArr
