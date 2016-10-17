@@ -23264,13 +23264,9 @@
 	  }, {
 	    key: 'tick',
 	    value: function tick(elapsed) {
-	      var min = String(Math.floor(elapsed / 100 / 60) + 100).substring(1);
-	      var sec = String(Math.floor(elapsed % (100 * 60) / 100));
-	      var ms = String(elapsed % 1000 + 100).substring(1);
-
-	      if (sec < 10) {
-	        sec = "0" + sec;
-	      }
+	      var min = String(Math.floor(elapsed / 1000 / 60) + 100).substring(1, 3);
+	      var sec = String(Math.floor(elapsed % (1000 * 60) / 1000) + 100).substring(1, 3);
+	      var ms = String(elapsed % 1000 + 1000).substring(1, 3);
 
 	      var timestamp = min + ":" + sec + ":" + ms;
 
@@ -23285,7 +23281,7 @@
 	        start: Date.now()
 	      });
 
-	      var interval = 100;
+	      var interval = 10;
 	      this.increment = setInterval(function () {
 	        var delta = Date.now() - _this2.state.start;
 	        _this2.setState({
@@ -23318,8 +23314,10 @@
 	    value: function handleStop() {
 	      clearInterval(this.increment);
 
+	      console.log(this.state.time);
+
 	      this.setState({
-	        time: this.state.time,
+	        time: this.state.time / 10,
 	        running: false
 	      });
 
