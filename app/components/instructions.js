@@ -1,22 +1,33 @@
 import React from 'react';
 import Scrambo from 'scrambo';
 
-import puzzles from '../utils/puzzles';
-
 class Instructions extends React.Component {
   constructor() {
     super();
     this.state = {
       instructions: [],
-      options: [
-        { _id: 0, value: '333', text: '3x3' },
-        { _id: 1, value: '222', text: '2x2' },
-        { _id: 2, value: '444', text: '4x4' },
-        { _id: 3, value: '555', text: '5x5' },
-        { _id: 4, value: '666', text: '6x6' },
-        { _id: 5, value: '777', text: '7x7' },
+      interfaceModes: [
+        { _id: 0, value: 'light', text: 'Light' },
+        { _id: 1, value: 'dark', text: 'Dark' }
       ],
-      value: ''
+      interfaceMode: 'light',
+      options: [
+        { _id: 0, value: 222, text: '2x2' },
+        { _id: 1, value: 333, text: '3x3' },
+        { _id: 2, value: 444, text: '4x4' },
+        { _id: 3, value: 555, text: '5x5' },
+        { _id: 4, value: 666, text: '6x6' },
+        { _id: 5, value: 777, text: '7x7' }
+      ],
+      inspectionTime: 0,
+      inspectionTimes: [
+        { _id: 0, value: 0, text: 'No Inspection' },
+        { _id: 1, value: 0, text: '3 Seconds' },
+        { _id: 2, value: 5, text: '5 Seconds' },
+        { _id: 3, value: 10, text: '10 Seconds' },
+        { _id: 4, value: 15, text: '15 Seconds' }
+      ],
+      value: '333'
     };
   }
 
@@ -31,21 +42,38 @@ class Instructions extends React.Component {
   }
 
   generateInstructions() {
-    var instructions = new Scrambo().type('333').get();
+    var instructions = new Scrambo().type(this.state.value).get();
 
     this.setState({
       instructions: instructions
     });
   }
 
-  handleCubeSizeChange() {
-    var value = document.querySelector('#js-cube-size');
+  handleCubeSizeChange(e) {
+    this.setState({
+      value: e.target.value
+    });
 
-    // this.setState({
-    //   value: value
-    // });
+    this.generateInstructions();
+    // console.log(this.state.value);
+  }
 
-    console.log(value);
+  handleInspectionTimeChange(e) {
+    this.setState({
+      inspectionTime: e.target.value
+    });
+
+    this.generateInstructions();
+    // console.log(this.state.inspectionTime);
+  }
+
+  handleInterfaceModeChange(e) {
+    this.setState({
+      inspectionTime: e.target.value
+    });
+
+    this.generateInstructions();
+    // console.log(this.state.inspectionTime);
   }
 
   render() {
@@ -57,38 +85,41 @@ class Instructions extends React.Component {
       }
     });
 
+    function mapDropdownOptions(array) {
+      // console.log(array);
+      array.map((option) => {
+        return (
+          <option
+            key={option._id}
+            value={option.value}
+            >{option.text}</option>
+          )
+        })
+    }
+
     return (
       <div>
-        <div className="controls">
-          <div className="">
+        <div className="row controls">
+          <div className="control-block">
             <h3>Cube Size:</h3>
-            <select id="js-cube-size" onChange={this.handleCubeSizeChange()}>
-              {
-                this.state.options.map((option) => {
-                  return (
-                    <option
-                      key={option._id}
-                      value={option.value}
-                      >{option.text}</option>
-                    )
-                  })
-                }
+            <select value={this.state.value} onChange={this.handleCubeSizeChange.bind(this)}>
+              {mapDropdownOptions(this.state.options)}
             </select>
           </div>
 
-          {/* <div className="">
+          <div className="control-block">
             <h3>Inspection Time:</h3>
-            <select>
-              <option value="10">10 Seconds</option>
+            <select value={this.state.inspectionTime} onChange={this.handleInspectionTimeChange.bind(this)}>
+              {mapDropdownOptions(this.state.inspectionTimes)}
             </select>
           </div>
 
-          <div className="">
+          <div className="control-block">
             <h3>Interface Mode:</h3>
-            <select>
-              <option value="light">Light</option>
+            <select value={this.state.interfaceMode} onChange={this.handleInterfaceModeChange.bind(this)}>
+              {mapDropdownOptions(this.state.interfaceModes)}
             </select>
-          </div> */}
+          </div>
         </div>
 
         <div className="instructions-container">

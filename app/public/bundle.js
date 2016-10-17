@@ -21449,7 +21449,7 @@
 
 	var _instructions2 = _interopRequireDefault(_instructions);
 
-	var _timer = __webpack_require__(174);
+	var _timer = __webpack_require__(183);
 
 	var _timer2 = _interopRequireDefault(_timer);
 
@@ -21502,13 +21502,9 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _scrambo = __webpack_require__(176);
+	var _scrambo = __webpack_require__(174);
 
 	var _scrambo2 = _interopRequireDefault(_scrambo);
-
-	var _puzzles = __webpack_require__(184);
-
-	var _puzzles2 = _interopRequireDefault(_puzzles);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -21528,8 +21524,12 @@
 
 	    _this.state = {
 	      instructions: [],
-	      options: [{ _id: 0, value: '333', text: '3x3' }, { _id: 1, value: '222', text: '2x2' }, { _id: 2, value: '444', text: '4x4' }, { _id: 3, value: '555', text: '5x5' }, { _id: 4, value: '666', text: '6x6' }, { _id: 5, value: '777', text: '7x7' }],
-	      value: ''
+	      interfaceModes: [{ _id: 0, value: 'light', text: 'Light' }, { _id: 1, value: 'dark', text: 'Dark' }],
+	      interfaceMode: 'light',
+	      options: [{ _id: 0, value: 222, text: '2x2' }, { _id: 1, value: 333, text: '3x3' }, { _id: 2, value: 444, text: '4x4' }, { _id: 3, value: 555, text: '5x5' }, { _id: 4, value: 666, text: '6x6' }, { _id: 5, value: 777, text: '7x7' }],
+	      inspectionTime: 0,
+	      inspectionTimes: [{ _id: 0, value: 0, text: 'No Inspection' }, { _id: 1, value: 0, text: '3 Seconds' }, { _id: 2, value: 5, text: '5 Seconds' }, { _id: 3, value: 10, text: '10 Seconds' }, { _id: 4, value: 15, text: '15 Seconds' }],
+	      value: '333'
 	    };
 	    return _this;
 	  }
@@ -21549,7 +21549,7 @@
 	  }, {
 	    key: 'generateInstructions',
 	    value: function generateInstructions() {
-	      var instructions = new _scrambo2.default().type('333').get();
+	      var instructions = new _scrambo2.default().type(this.state.value).get();
 
 	      this.setState({
 	        instructions: instructions
@@ -21557,14 +21557,33 @@
 	    }
 	  }, {
 	    key: 'handleCubeSizeChange',
-	    value: function handleCubeSizeChange() {
-	      var value = document.querySelector('#js-cube-size');
+	    value: function handleCubeSizeChange(e) {
+	      this.setState({
+	        value: e.target.value
+	      });
 
-	      // this.setState({
-	      //   value: value
-	      // });
+	      this.generateInstructions();
+	      // console.log(this.state.value);
+	    }
+	  }, {
+	    key: 'handleInspectionTimeChange',
+	    value: function handleInspectionTimeChange(e) {
+	      this.setState({
+	        inspectionTime: e.target.value
+	      });
 
-	      console.log(value);
+	      this.generateInstructions();
+	      // console.log(this.state.inspectionTime);
+	    }
+	  }, {
+	    key: 'handleInterfaceModeChange',
+	    value: function handleInterfaceModeChange(e) {
+	      this.setState({
+	        inspectionTime: e.target.value
+	      });
+
+	      this.generateInstructions();
+	      // console.log(this.state.inspectionTime);
 	    }
 	  }, {
 	    key: 'render',
@@ -21579,15 +21598,29 @@
 	        }
 	      });
 
+	      function mapDropdownOptions(array) {
+	        // console.log(array);
+	        array.map(function (option) {
+	          return _react2.default.createElement(
+	            'option',
+	            {
+	              key: option._id,
+	              value: option.value
+	            },
+	            option.text
+	          );
+	        });
+	      }
+
 	      return _react2.default.createElement(
 	        'div',
 	        null,
 	        _react2.default.createElement(
 	          'div',
-	          { className: 'controls' },
+	          { className: 'row controls' },
 	          _react2.default.createElement(
 	            'div',
-	            { className: '' },
+	            { className: 'control-block' },
 	            _react2.default.createElement(
 	              'h3',
 	              null,
@@ -21595,17 +21628,36 @@
 	            ),
 	            _react2.default.createElement(
 	              'select',
-	              { id: 'js-cube-size', onChange: this.handleCubeSizeChange() },
-	              this.state.options.map(function (option) {
-	                return _react2.default.createElement(
-	                  'option',
-	                  {
-	                    key: option._id,
-	                    value: option.value
-	                  },
-	                  option.text
-	                );
-	              })
+	              { value: this.state.value, onChange: this.handleCubeSizeChange.bind(this) },
+	              mapDropdownOptions(this.state.options)
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'control-block' },
+	            _react2.default.createElement(
+	              'h3',
+	              null,
+	              'Inspection Time:'
+	            ),
+	            _react2.default.createElement(
+	              'select',
+	              { value: this.state.inspectionTime, onChange: this.handleInspectionTimeChange.bind(this) },
+	              mapDropdownOptions(this.state.inspectionTimes)
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'control-block' },
+	            _react2.default.createElement(
+	              'h3',
+	              null,
+	              'Interface Mode:'
+	            ),
+	            _react2.default.createElement(
+	              'select',
+	              { value: this.state.interfaceMode, onChange: this.handleInterfaceModeChange.bind(this) },
+	              mapDropdownOptions(this.state.interfaceModes)
 	            )
 	          )
 	        ),
@@ -21641,424 +21693,17 @@
 /* 174 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _instructions = __webpack_require__(173);
-
-	var _instructions2 = _interopRequireDefault(_instructions);
-
-	var _stats = __webpack_require__(175);
-
-	var _stats2 = _interopRequireDefault(_stats);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var Timer = function (_React$Component) {
-	  _inherits(Timer, _React$Component);
-
-	  function Timer(props) {
-	    _classCallCheck(this, Timer);
-
-	    var _this = _possibleConstructorReturn(this, (Timer.__proto__ || Object.getPrototypeOf(Timer)).call(this, props));
-
-	    _this.state = {
-	      running: false,
-	      solves: [],
-	      start: 0,
-	      time: 0
-	    };
-
-	    _this.increment = null;
-	    return _this;
-	  }
-
-	  _createClass(Timer, [{
-	    key: 'componentWillUnmount',
-	    value: function componentWillUnmount() {
-	      clearInterval(this.increment);
-	      this.setState({
-	        time: 0
-	      });
-	    }
-	  }, {
-	    key: 'tick',
-	    value: function tick(elapsed) {
-	      var min = String(Math.floor(elapsed / 1000 / 60) + 100).substring(1, 3);
-	      var sec = String(Math.floor(elapsed % (1000 * 60) / 1000) + 100).substring(1, 3);
-	      var ms = String(elapsed % 1000 + 1000).substring(1, 3);
-
-	      var timestamp = min + ":" + sec + ":" + ms;
-
-	      return timestamp;
-	    }
-	  }, {
-	    key: 'handleStart',
-	    value: function handleStart() {
-	      var _this2 = this;
-
-	      this.setState({
-	        start: Date.now()
-	      });
-
-	      var interval = 10;
-	      this.increment = setInterval(function () {
-	        var delta = Date.now() - _this2.state.start;
-	        _this2.setState({
-	          time: delta,
-	          running: true
-	        });
-	      }, interval);
-
-	      if (this.state.time > 0) {
-	        clearInterval(this.increment);
-
-	        this.setState({
-	          start: Date.now(),
-	          time: 0
-	        });
-
-	        this.increment = setInterval(function () {
-	          var delta = Date.now() - _this2.state.start;
-	          _this2.setState({
-	            time: delta,
-	            running: true
-	          });
-	        }, interval);
-	      } else {
-	        this.increment;
-	      }
-	    }
-	  }, {
-	    key: 'handleStop',
-	    value: function handleStop() {
-	      clearInterval(this.increment);
-
-	      console.log(this.state.time);
-
-	      this.setState({
-	        time: this.state.time,
-	        running: false
-	      });
-
-	      var myArr = this.state.solves.slice();
-
-	      myArr.push(Math.floor(this.state.time / 10));
-
-	      this.setState({
-	        solves: myArr
-	      });
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      var _this3 = this;
-
-	      document.body.onkeyup = function (e) {
-	        if (e.keyCode == 32) {
-	          if (_this3.state.running == true) {
-	            _this3.handleStop();
-	          } else if (_this3.state.running == false) {
-	            _this3.handleStart();
-	          }
-	        }
-	      };
-
-	      return _react2.default.createElement(
-	        'div',
-	        null,
-	        _react2.default.createElement(_instructions2.default, { isRunning: this.state.running }),
-	        _react2.default.createElement(
-	          'h1',
-	          { className: 'timestamp' },
-	          this.tick(this.state.time)
-	        ),
-	        _react2.default.createElement(_stats2.default, { solves: this.state.solves })
-	      );
-	    }
-	  }]);
-
-	  return Timer;
-	}(_react2.default.Component);
-
-	exports.default = Timer;
-
-/***/ },
-/* 175 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var Stats = function (_React$Component) {
-	  _inherits(Stats, _React$Component);
-
-	  function Stats() {
-	    _classCallCheck(this, Stats);
-
-	    var _this = _possibleConstructorReturn(this, (Stats.__proto__ || Object.getPrototypeOf(Stats)).call(this));
-
-	    _this.state = {
-	      avg: 0,
-	      avgTimestamp: '',
-	      avgOf3: '',
-	      avgOf5: '',
-	      avgOf10: '',
-	      avgOf12: '',
-	      best: '',
-	      solves: []
-	    };
-	    return _this;
-	  }
-
-	  _createClass(Stats, [{
-	    key: 'componentWillReceiveProps',
-	    value: function componentWillReceiveProps() {
-	      this.calculateAverage();
-	      this.calculateBest();
-	    }
-	  }, {
-	    key: 'calculateTimestamp',
-	    value: function calculateTimestamp(elapsed) {
-	      var min = String(Math.floor(elapsed / 100 / 60) + 100).substring(1);
-	      var sec = String(Math.floor(elapsed % (100 * 60) / 100));
-	      var ms = String((elapsed % 100 + 100).toFixed(0)).substring(1);
-
-	      if (sec < 10) {
-	        sec = "0" + sec;
-	      }
-
-	      var timestamp = min + ":" + sec + ":" + ms;
-
-	      return timestamp;
-	    }
-	  }, {
-	    key: 'calculateAverage',
-	    value: function calculateAverage() {
-	      var solves = this.props.solves;
-	      var sum = 0;
-
-	      for (var i = 0; i < solves.length; i++) {
-	        sum += solves[i];
-	      }
-
-	      var avg = sum / solves.length;
-
-	      this.setState({
-	        avg: avg,
-	        avgTimestamp: this.calculateTimestamp(avg)
-	      });
-
-	      if (solves.length == 3) {
-	        this.setState({ avgOf3: this.calculateTimestamp(avg) });
-	      } else if (solves.length == 5) {
-	        this.setState({ avgOf5: this.calculateTimestamp(avg) });
-	      } else if (solves.length == 10) {
-	        this.setState({ avgOf10: this.calculateTimestamp(avg) });
-	      } else if (solves.length == 12) {
-	        this.setState({ avgOf12: this.calculateTimestamp(avg) });
-	      }
-	    }
-	  }, {
-	    key: 'calculateBest',
-	    value: function calculateBest() {
-	      var solves = this.props.solves;
-	      var best = Math.min.apply(Math, solves);
-
-	      this.setState({
-	        best: this.calculateTimestamp(best)
-	      });
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      if (this.state.avg > 0) {
-	        var avg = this.state.avgTimestamp;
-	        var best = this.state.best;
-	      } else {
-	        var avg = '--:--:--';
-	        var best = '--:--:--';
-	      }
-
-	      if (this.props.solves.length >= 2) {
-	        if (this.state.avgOf3 !== '') {
-	          var avgOf3 = this.state.avgOf3;
-	        } else {
-	          var avgOf3 = '--:--:--';
-	        }
-	      } else {
-	        var avgOf3 = '--:--:--';
-	      }
-
-	      if (this.props.solves.length >= 4) {
-	        if (this.state.avgOf5 !== '') {
-	          var avgOf5 = this.state.avgOf5;
-	        } else {
-	          var avgOf5 = '--:--:--';
-	        }
-	      } else {
-	        var avgOf5 = '--:--:--';
-	      }
-
-	      if (this.props.solves.length >= 9) {
-	        if (this.state.avgOf10 !== '') {
-	          var avgOf10 = this.state.avgOf10;
-	        } else {
-	          var avgOf10 = '--:--:--';
-	        }
-	      } else {
-	        var avgOf10 = '--:--:--';
-	      }
-
-	      if (this.props.solves.length >= 11) {
-	        if (this.state.avgOf12 !== '') {
-	          var avgOf12 = this.state.avgOf12;
-	        } else {
-	          var avgOf12 = '--:--:--';
-	        }
-	      } else {
-	        var avgOf12 = '--:--:--';
-	      }
-
-	      return _react2.default.createElement(
-	        'table',
-	        { className: 'stat-box' },
-	        _react2.default.createElement(
-	          'tbody',
-	          null,
-	          _react2.default.createElement(
-	            'tr',
-	            null,
-	            _react2.default.createElement(
-	              'td',
-	              null,
-	              'Average:'
-	            ),
-	            _react2.default.createElement(
-	              'td',
-	              null,
-	              avg
-	            ),
-	            _react2.default.createElement(
-	              'td',
-	              null,
-	              'Best'
-	            ),
-	            _react2.default.createElement(
-	              'td',
-	              null,
-	              best
-	            )
-	          ),
-	          _react2.default.createElement(
-	            'tr',
-	            null,
-	            _react2.default.createElement(
-	              'td',
-	              null,
-	              'Average of 3:'
-	            ),
-	            _react2.default.createElement(
-	              'td',
-	              null,
-	              avgOf3
-	            ),
-	            _react2.default.createElement(
-	              'td',
-	              null,
-	              'Average of 10:'
-	            ),
-	            _react2.default.createElement(
-	              'td',
-	              null,
-	              avgOf10
-	            )
-	          ),
-	          _react2.default.createElement(
-	            'tr',
-	            null,
-	            _react2.default.createElement(
-	              'td',
-	              null,
-	              'Average of 5:'
-	            ),
-	            _react2.default.createElement(
-	              'td',
-	              null,
-	              avgOf5
-	            ),
-	            _react2.default.createElement(
-	              'td',
-	              null,
-	              'Average of 12:'
-	            ),
-	            _react2.default.createElement(
-	              'td',
-	              null,
-	              avgOf12
-	            )
-	          )
-	        )
-	      );
-	    }
-	  }]);
-
-	  return Stats;
-	}(_react2.default.Component);
-
-	Stats.propTypes = {
-	  solves: _react2.default.PropTypes.array.isRequired
-	};
-
-	exports.default = Stats;
-
-/***/ },
-/* 176 */
-/***/ function(module, exports, __webpack_require__) {
-
 	/* jshint node: true */
 
-	var util = __webpack_require__(177);
+	var util = __webpack_require__(175);
 
 	var scramblers = {};
-	scramblers = __webpack_require__(178);
-	scramblers.clock = __webpack_require__(179);
-	scramblers.minx = __webpack_require__(180);
-	scramblers.pyram = __webpack_require__(181);
-	scramblers.sq1 = __webpack_require__(182);
-	scramblers.skewb = __webpack_require__(183);
+	scramblers = __webpack_require__(176);
+	scramblers.clock = __webpack_require__(177);
+	scramblers.minx = __webpack_require__(178);
+	scramblers.pyram = __webpack_require__(179);
+	scramblers.sq1 = __webpack_require__(180);
+	scramblers.skewb = __webpack_require__(181);
 
 	/**
 	 * A scramble generator
@@ -22162,7 +21807,7 @@
 	module.exports = Scrambo;
 
 /***/ },
-/* 177 */
+/* 175 */
 /***/ function(module, exports) {
 
 	/* jshint node: true */
@@ -22183,7 +21828,7 @@
 
 
 /***/ },
-/* 178 */
+/* 176 */
 /***/ function(module, exports) {
 
 	/* jshint node: true */
@@ -22291,7 +21936,7 @@
 
 
 /***/ },
-/* 179 */
+/* 177 */
 /***/ function(module, exports) {
 
 	/* jshint node: true */
@@ -22352,7 +21997,7 @@
 
 
 /***/ },
-/* 180 */
+/* 178 */
 /***/ function(module, exports) {
 
 	/* jshint node: true */
@@ -22416,7 +22061,7 @@
 
 
 /***/ },
-/* 181 */
+/* 179 */
 /***/ function(module, exports) {
 
 	/* jshint node: true */
@@ -22723,7 +22368,7 @@
 
 
 /***/ },
-/* 182 */
+/* 180 */
 /***/ function(module, exports) {
 
 	/* jshint node: true */
@@ -23436,7 +23081,7 @@
 
 
 /***/ },
-/* 183 */
+/* 181 */
 /***/ function(module, exports) {
 
 	/*	Port by Caleb Hoover from Shuang Chen's skewb scrambler.
@@ -23641,19 +23286,412 @@
 	module.exports = scrambler;
 
 /***/ },
-/* 184 */
-/***/ function(module, exports) {
+/* 182 */,
+/* 183 */
+/***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	var puzzles = {
-	  'three': ['R', 'R2', 'R' + "'", 'R2' + "'", 'L', 'L2', 'L' + "'", 'L2' + "'", 'U', 'U2', 'U' + "'", 'U2' + "'", 'D', 'D2', 'D' + "'", 'D2' + "'", 'F', 'F2', 'F' + "'", 'F2' + "'", 'B', 'B2', 'B' + "'", 'B2' + "'"]
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _instructions = __webpack_require__(173);
+
+	var _instructions2 = _interopRequireDefault(_instructions);
+
+	var _stats = __webpack_require__(184);
+
+	var _stats2 = _interopRequireDefault(_stats);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Timer = function (_React$Component) {
+	  _inherits(Timer, _React$Component);
+
+	  function Timer(props) {
+	    _classCallCheck(this, Timer);
+
+	    var _this = _possibleConstructorReturn(this, (Timer.__proto__ || Object.getPrototypeOf(Timer)).call(this, props));
+
+	    _this.state = {
+	      running: false,
+	      solves: [],
+	      start: 0,
+	      time: 0
+	    };
+
+	    _this.increment = null;
+	    return _this;
+	  }
+
+	  _createClass(Timer, [{
+	    key: 'componentWillUnmount',
+	    value: function componentWillUnmount() {
+	      clearInterval(this.increment);
+	      this.setState({
+	        time: 0
+	      });
+	    }
+	  }, {
+	    key: 'tick',
+	    value: function tick(elapsed) {
+	      var min = String(Math.floor(elapsed / 1000 / 60) + 100).substring(1, 3);
+	      var sec = String(Math.floor(elapsed % (1000 * 60) / 1000) + 100).substring(1, 3);
+	      var ms = String(elapsed % 1000 + 1000).substring(1, 3);
+
+	      var timestamp = min + ":" + sec + ":" + ms;
+
+	      return timestamp;
+	    }
+	  }, {
+	    key: 'handleStart',
+	    value: function handleStart() {
+	      var _this2 = this;
+
+	      this.setState({
+	        start: Date.now()
+	      });
+
+	      var interval = 10;
+	      this.increment = setInterval(function () {
+	        var delta = Date.now() - _this2.state.start;
+	        _this2.setState({
+	          time: delta,
+	          running: true
+	        });
+	      }, interval);
+
+	      if (this.state.time > 0) {
+	        clearInterval(this.increment);
+
+	        this.setState({
+	          start: Date.now(),
+	          time: 0
+	        });
+
+	        this.increment = setInterval(function () {
+	          var delta = Date.now() - _this2.state.start;
+	          _this2.setState({
+	            time: delta,
+	            running: true
+	          });
+	        }, interval);
+	      } else {
+	        this.increment;
+	      }
+	    }
+	  }, {
+	    key: 'handleStop',
+	    value: function handleStop() {
+	      clearInterval(this.increment);
+
+	      console.log(this.state.time);
+
+	      this.setState({
+	        time: this.state.time,
+	        running: false
+	      });
+
+	      var myArr = this.state.solves.slice();
+
+	      myArr.push(Math.floor(this.state.time / 10));
+
+	      this.setState({
+	        solves: myArr
+	      });
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var _this3 = this;
+
+	      document.body.onkeyup = function (e) {
+	        if (e.keyCode == 32) {
+	          if (_this3.state.running == true) {
+	            _this3.handleStop();
+	          } else if (_this3.state.running == false) {
+	            _this3.handleStart();
+	          }
+	        }
+	      };
+
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(_instructions2.default, { isRunning: this.state.running }),
+	        _react2.default.createElement(
+	          'h1',
+	          { className: 'timestamp' },
+	          this.tick(this.state.time)
+	        ),
+	        _react2.default.createElement(_stats2.default, { solves: this.state.solves })
+	      );
+	    }
+	  }]);
+
+	  return Timer;
+	}(_react2.default.Component);
+
+	exports.default = Timer;
+
+/***/ },
+/* 184 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Stats = function (_React$Component) {
+	  _inherits(Stats, _React$Component);
+
+	  function Stats() {
+	    _classCallCheck(this, Stats);
+
+	    var _this = _possibleConstructorReturn(this, (Stats.__proto__ || Object.getPrototypeOf(Stats)).call(this));
+
+	    _this.state = {
+	      avg: 0,
+	      avgTimestamp: '',
+	      avgOf3: '',
+	      avgOf5: '',
+	      avgOf10: '',
+	      avgOf12: '',
+	      best: '',
+	      solves: []
+	    };
+	    return _this;
+	  }
+
+	  _createClass(Stats, [{
+	    key: 'componentWillReceiveProps',
+	    value: function componentWillReceiveProps() {
+	      this.calculateAverage();
+	      this.calculateBest();
+	    }
+	  }, {
+	    key: 'calculateTimestamp',
+	    value: function calculateTimestamp(elapsed) {
+	      var min = String(Math.floor(elapsed / 100 / 60) + 100).substring(1);
+	      var sec = String(Math.floor(elapsed % (100 * 60) / 100));
+	      var ms = String((elapsed % 100 + 100).toFixed(0)).substring(1);
+
+	      if (sec < 10) {
+	        sec = "0" + sec;
+	      }
+
+	      var timestamp = min + ":" + sec + ":" + ms;
+
+	      return timestamp;
+	    }
+	  }, {
+	    key: 'calculateAverage',
+	    value: function calculateAverage() {
+	      var solves = this.props.solves;
+	      var sum = 0;
+
+	      for (var i = 0; i < solves.length; i++) {
+	        sum += solves[i];
+	      }
+
+	      var avg = sum / solves.length;
+
+	      this.setState({
+	        avg: avg,
+	        avgTimestamp: this.calculateTimestamp(avg)
+	      });
+
+	      if (solves.length == 3) {
+	        this.setState({ avgOf3: this.calculateTimestamp(avg) });
+	      } else if (solves.length == 5) {
+	        this.setState({ avgOf5: this.calculateTimestamp(avg) });
+	      } else if (solves.length == 10) {
+	        this.setState({ avgOf10: this.calculateTimestamp(avg) });
+	      } else if (solves.length == 12) {
+	        this.setState({ avgOf12: this.calculateTimestamp(avg) });
+	      }
+	    }
+	  }, {
+	    key: 'calculateBest',
+	    value: function calculateBest() {
+	      var solves = this.props.solves;
+	      var best = Math.min.apply(Math, solves);
+
+	      this.setState({
+	        best: this.calculateTimestamp(best)
+	      });
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      if (this.state.avg > 0) {
+	        var avg = this.state.avgTimestamp;
+	        var best = this.state.best;
+	      } else {
+	        var avg = '--:--:--';
+	        var best = '--:--:--';
+	      }
+
+	      if (this.props.solves.length >= 2) {
+	        if (this.state.avgOf3 !== '') {
+	          var avgOf3 = this.state.avgOf3;
+	        } else {
+	          var avgOf3 = '--:--:--';
+	        }
+	      } else {
+	        var avgOf3 = '--:--:--';
+	      }
+
+	      if (this.props.solves.length >= 4) {
+	        if (this.state.avgOf5 !== '') {
+	          var avgOf5 = this.state.avgOf5;
+	        } else {
+	          var avgOf5 = '--:--:--';
+	        }
+	      } else {
+	        var avgOf5 = '--:--:--';
+	      }
+
+	      if (this.props.solves.length >= 9) {
+	        if (this.state.avgOf10 !== '') {
+	          var avgOf10 = this.state.avgOf10;
+	        } else {
+	          var avgOf10 = '--:--:--';
+	        }
+	      } else {
+	        var avgOf10 = '--:--:--';
+	      }
+
+	      if (this.props.solves.length >= 11) {
+	        if (this.state.avgOf12 !== '') {
+	          var avgOf12 = this.state.avgOf12;
+	        } else {
+	          var avgOf12 = '--:--:--';
+	        }
+	      } else {
+	        var avgOf12 = '--:--:--';
+	      }
+
+	      return _react2.default.createElement(
+	        'table',
+	        { className: 'stat-box' },
+	        _react2.default.createElement(
+	          'tbody',
+	          null,
+	          _react2.default.createElement(
+	            'tr',
+	            null,
+	            _react2.default.createElement(
+	              'td',
+	              null,
+	              'Average:'
+	            ),
+	            _react2.default.createElement(
+	              'td',
+	              null,
+	              avg
+	            ),
+	            _react2.default.createElement(
+	              'td',
+	              null,
+	              'Best'
+	            ),
+	            _react2.default.createElement(
+	              'td',
+	              null,
+	              best
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'tr',
+	            null,
+	            _react2.default.createElement(
+	              'td',
+	              null,
+	              'Average of 3:'
+	            ),
+	            _react2.default.createElement(
+	              'td',
+	              null,
+	              avgOf3
+	            ),
+	            _react2.default.createElement(
+	              'td',
+	              null,
+	              'Average of 10:'
+	            ),
+	            _react2.default.createElement(
+	              'td',
+	              null,
+	              avgOf10
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'tr',
+	            null,
+	            _react2.default.createElement(
+	              'td',
+	              null,
+	              'Average of 5:'
+	            ),
+	            _react2.default.createElement(
+	              'td',
+	              null,
+	              avgOf5
+	            ),
+	            _react2.default.createElement(
+	              'td',
+	              null,
+	              'Average of 12:'
+	            ),
+	            _react2.default.createElement(
+	              'td',
+	              null,
+	              avgOf12
+	            )
+	          )
+	        )
+	      );
+	    }
+	  }]);
+
+	  return Stats;
+	}(_react2.default.Component);
+
+	Stats.propTypes = {
+	  solves: _react2.default.PropTypes.array.isRequired
 	};
 
-	exports.default = puzzles;
+	exports.default = Stats;
 
 /***/ }
 /******/ ]);
