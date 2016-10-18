@@ -3724,6 +3724,10 @@ react:
     loose-envify "^1.1.0"
     object-assign "^4.1.0"
 
+react-addons-linked-state-mixin:
+  version "15.3.2"
+  resolved "https://registry.yarnpkg.com/react-addons-linked-state-mixin/-/react-addons-linked-state-mixin-15.3.2.tgz#e5f8c74d31f21819e7ed760f376b9ec679be07c5"
+
 react-dom:
   version "15.3.2"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-15.3.2.tgz#c46b0aa5380d7b838e7a59c4a7beff2ed315531f"

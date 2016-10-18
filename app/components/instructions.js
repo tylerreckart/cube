@@ -2,8 +2,8 @@ import React from 'react';
 import Scrambo from 'scrambo';
 
 class Instructions extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       instructions: [],
       interfaceModes: [
@@ -22,13 +22,15 @@ class Instructions extends React.Component {
       inspectionTime: 0,
       inspectionTimes: [
         { _id: 0, value: 0, text: 'No Inspection' },
-        { _id: 1, value: 0, text: '3 Seconds' },
+        { _id: 1, value: 3, text: '3 Seconds' },
         { _id: 2, value: 5, text: '5 Seconds' },
         { _id: 3, value: 10, text: '10 Seconds' },
         { _id: 4, value: 15, text: '15 Seconds' }
       ],
       value: '333'
     };
+
+    this.handleCubeSizeChange = this.handleCubeSizeChange.bind(this)
   }
 
   componentWillMount() {
@@ -55,25 +57,21 @@ class Instructions extends React.Component {
     });
 
     this.generateInstructions();
-    // console.log(this.state.value);
+    console.log(this.state.value);
   }
 
   handleInspectionTimeChange(e) {
     this.setState({
       inspectionTime: e.target.value
     });
-
-    this.generateInstructions();
-    // console.log(this.state.inspectionTime);
+    console.log(this.state.inspectionTime);
   }
 
   handleInterfaceModeChange(e) {
     this.setState({
-      inspectionTime: e.target.value
+      interfaceMode: e.target.value
     });
-
-    this.generateInstructions();
-    // console.log(this.state.inspectionTime);
+    console.log(this.state.interfaceMode);
   }
 
   render() {
@@ -90,7 +88,7 @@ class Instructions extends React.Component {
         <div className="row controls">
           <div className="control-block">
             <h3>Cube Size:</h3>
-            <select value={this.state.value} onChange={this.handleCubeSizeChange.bind(this)}>
+            <select value={this.state.options} onChange={this.handleCubeSizeChange}>
               {
                 this.state.options.map((option) => {
                   return (

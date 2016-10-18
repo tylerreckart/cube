@@ -21517,10 +21517,10 @@
 	var Instructions = function (_React$Component) {
 	  _inherits(Instructions, _React$Component);
 
-	  function Instructions() {
+	  function Instructions(props) {
 	    _classCallCheck(this, Instructions);
 
-	    var _this = _possibleConstructorReturn(this, (Instructions.__proto__ || Object.getPrototypeOf(Instructions)).call(this));
+	    var _this = _possibleConstructorReturn(this, (Instructions.__proto__ || Object.getPrototypeOf(Instructions)).call(this, props));
 
 	    _this.state = {
 	      instructions: [],
@@ -21528,9 +21528,11 @@
 	      interfaceMode: 'light',
 	      options: [{ _id: 0, value: 222, text: '2x2' }, { _id: 1, value: 333, text: '3x3' }, { _id: 2, value: 444, text: '4x4' }, { _id: 3, value: 555, text: '5x5' }, { _id: 4, value: 666, text: '6x6' }, { _id: 5, value: 777, text: '7x7' }],
 	      inspectionTime: 0,
-	      inspectionTimes: [{ _id: 0, value: 0, text: 'No Inspection' }, { _id: 1, value: 0, text: '3 Seconds' }, { _id: 2, value: 5, text: '5 Seconds' }, { _id: 3, value: 10, text: '10 Seconds' }, { _id: 4, value: 15, text: '15 Seconds' }],
+	      inspectionTimes: [{ _id: 0, value: 0, text: 'No Inspection' }, { _id: 1, value: 3, text: '3 Seconds' }, { _id: 2, value: 5, text: '5 Seconds' }, { _id: 3, value: 10, text: '10 Seconds' }, { _id: 4, value: 15, text: '15 Seconds' }],
 	      value: '333'
 	    };
+
+	    _this.handleCubeSizeChange = _this.handleCubeSizeChange.bind(_this);
 	    return _this;
 	  }
 
@@ -21563,7 +21565,7 @@
 	      });
 
 	      this.generateInstructions();
-	      // console.log(this.state.value);
+	      console.log(this.state.value);
 	    }
 	  }, {
 	    key: 'handleInspectionTimeChange',
@@ -21571,19 +21573,15 @@
 	      this.setState({
 	        inspectionTime: e.target.value
 	      });
-
-	      this.generateInstructions();
-	      // console.log(this.state.inspectionTime);
+	      console.log(this.state.inspectionTime);
 	    }
 	  }, {
 	    key: 'handleInterfaceModeChange',
 	    value: function handleInterfaceModeChange(e) {
 	      this.setState({
-	        inspectionTime: e.target.value
+	        interfaceMode: e.target.value
 	      });
-
-	      this.generateInstructions();
-	      // console.log(this.state.inspectionTime);
+	      console.log(this.state.interfaceMode);
 	    }
 	  }, {
 	    key: 'render',
@@ -21614,7 +21612,7 @@
 	            ),
 	            _react2.default.createElement(
 	              'select',
-	              { value: this.state.value, onChange: this.handleCubeSizeChange.bind(this) },
+	              { value: this.state.options, onChange: this.handleCubeSizeChange },
 	              this.state.options.map(function (option) {
 	                return _react2.default.createElement(
 	                  'option',
