@@ -30,31 +30,35 @@ class Controls extends React.Component {
     };
   }
 
-  handleSubmit(value) {
-    this.props.scramble(value);
-  }
-
   handleCubeSizeChange(e) {
     var value = e.target.value;
     this.setState({
       value: value
     });
-    this.handleSubmit(value);
+    this.handleCubeSizeSubmit(value);
   }
+
+  handleCubeSizeSubmit(value) { this.props.scramble(value); }
 
   handleInspectionTimeChange(e) {
+    var value = e.target.value;
     this.setState({
-      inspectionTime: e.target.value
+      inspectionTime: value
     });
-    console.log(this.state.inspectionTime);
+    this.handleInspectionTimeSubmit(value);
   }
 
+  handleInspectionTimeSubmit(value) { this.props.setInspectionTimer(value); }
+
   handleInterfaceModeChange(e) {
+    var value = e.target.value;
     this.setState({
-      interfaceMode: e.target.value
+      interfaceMode: value
     });
-    console.log(this.state.interfaceMode);
+    this.handleInterfaceModeSubmit(value);
   }
+
+  handleInterfaceModeSubmit(value) { this.props.setInterfaceMode(value); }
 
   render() {
     return (
@@ -112,6 +116,8 @@ class Controls extends React.Component {
 }
 
 Controls.propTypes = {
+  setInspectionTimer: React.PropTypes.func,
+  setInterfaceMode: React.PropTypes.func,
   scramble: React.PropTypes.func,
 }
 

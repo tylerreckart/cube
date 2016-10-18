@@ -7,48 +7,62 @@ class Instructions extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      instructions: [],
+      inspectionTime: 0,
+      interfaceMode: 'light',
+      scramble: [],
       value: 333
     };
   }
 
   componentWillMount() {
-    this.generateInstructions(this.state.value);
+    this.scramble(this.state.value);
   }
 
   componentWillUnmount() {
     this.setState({
-      instructions: []
+      scramble: []
     })
   }
 
-  generateInstructions(value) {
-    var instructions = new Scrambo().type(value).get();
+  setInspectionTimer(value) {
+    this.setState({
+      inspectionTime: value
+    });
+  }
 
-    console.log(value);
+  setInterfaceMode(value) {
+    this.setState({
+      interfaceMode: value
+    });
+  }
+
+  scramble(value) {
+    var scramble = new Scrambo().type(value).get();
 
     this.setState({
-      instructions: instructions,
+      scramble: scramble,
       value: value
     });
-
-    // console.log(this.state.value);
   }
 
   render() {
-    var instructions = this.state.instructions.join(" ").toString();
+    var scramble = this.state.scramble.join(" ").toString();
 
     document.addEventListener('keypress', (e) => {
       if (e.keyCode == 32 && this.props.isRunning == true) {
-        this.generateInstructions();
+        this.scramble();
       }
     });
 
     return (
-      <div>
-        <Controls scramble={this.generateInstructions.bind(this)}/>
-        <div className="instructions-container">
-          <h3 className="instructions"><strong>Scramble:</strong> {instructions}</h3>
+      <div className="row">
+        <Controls
+          setInspectionTimer={this.setInspectionTimer.bind(this)}
+          setInterfaceMode={this.setInterfaceMode.bind(this)}
+          scramble={this.scramble.bind(this)} />
+
+        <div className="row instructions-container">
+          <h3 className="instructions"><strong>Scramble:</strong> {scramble}</h3>
         </div>
       </div>
     );

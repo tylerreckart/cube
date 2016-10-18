@@ -21527,7 +21527,9 @@
 	    var _this = _possibleConstructorReturn(this, (Instructions.__proto__ || Object.getPrototypeOf(Instructions)).call(this, props));
 
 	    _this.state = {
-	      instructions: [],
+	      inspectionTime: 0,
+	      interfaceMode: 'light',
+	      scramble: [],
 	      value: 333
 	    };
 	    return _this;
@@ -21536,49 +21538,62 @@
 	  _createClass(Instructions, [{
 	    key: 'componentWillMount',
 	    value: function componentWillMount() {
-	      this.generateInstructions(this.state.value);
+	      this.scramble(this.state.value);
 	    }
 	  }, {
 	    key: 'componentWillUnmount',
 	    value: function componentWillUnmount() {
 	      this.setState({
-	        instructions: []
+	        scramble: []
 	      });
 	    }
 	  }, {
-	    key: 'generateInstructions',
-	    value: function generateInstructions(value) {
-	      var instructions = new _scrambo2.default().type(value).get();
-
-	      console.log(value);
+	    key: 'setInspectionTimer',
+	    value: function setInspectionTimer(value) {
+	      this.setState({
+	        inspectionTime: value
+	      });
+	    }
+	  }, {
+	    key: 'setInterfaceMode',
+	    value: function setInterfaceMode(value) {
+	      this.setState({
+	        interfaceMode: value
+	      });
+	    }
+	  }, {
+	    key: 'scramble',
+	    value: function scramble(value) {
+	      var scramble = new _scrambo2.default().type(value).get();
 
 	      this.setState({
-	        instructions: instructions,
+	        scramble: scramble,
 	        value: value
 	      });
-
-	      // console.log(this.state.value);
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
 	      var _this2 = this;
 
-	      var instructions = this.state.instructions.join(" ").toString();
+	      var scramble = this.state.scramble.join(" ").toString();
 
 	      document.addEventListener('keypress', function (e) {
 	        if (e.keyCode == 32 && _this2.props.isRunning == true) {
-	          _this2.generateInstructions();
+	          _this2.scramble();
 	        }
 	      });
 
 	      return _react2.default.createElement(
 	        'div',
-	        null,
-	        _react2.default.createElement(_controls2.default, { scramble: this.generateInstructions.bind(this) }),
+	        { className: 'row' },
+	        _react2.default.createElement(_controls2.default, {
+	          setInspectionTimer: this.setInspectionTimer.bind(this),
+	          setInterfaceMode: this.setInterfaceMode.bind(this),
+	          scramble: this.scramble.bind(this) }),
 	        _react2.default.createElement(
 	          'div',
-	          { className: 'instructions-container' },
+	          { className: 'row instructions-container' },
 	          _react2.default.createElement(
 	            'h3',
 	            { className: 'instructions' },
@@ -21588,7 +21603,7 @@
 	              'Scramble:'
 	            ),
 	            ' ',
-	            instructions
+	            scramble
 	          )
 	        )
 	      );
@@ -23652,34 +23667,46 @@
 	  }
 
 	  _createClass(Controls, [{
-	    key: 'handleSubmit',
-	    value: function handleSubmit(value) {
-	      this.props.scramble(value);
-	    }
-	  }, {
 	    key: 'handleCubeSizeChange',
 	    value: function handleCubeSizeChange(e) {
 	      var value = e.target.value;
 	      this.setState({
 	        value: value
 	      });
-	      this.handleSubmit(value);
+	      this.handleCubeSizeSubmit(value);
+	    }
+	  }, {
+	    key: 'handleCubeSizeSubmit',
+	    value: function handleCubeSizeSubmit(value) {
+	      this.props.scramble(value);
 	    }
 	  }, {
 	    key: 'handleInspectionTimeChange',
 	    value: function handleInspectionTimeChange(e) {
+	      var value = e.target.value;
 	      this.setState({
-	        inspectionTime: e.target.value
+	        inspectionTime: value
 	      });
-	      console.log(this.state.inspectionTime);
+	      this.handleInspectionTimeSubmit(value);
+	    }
+	  }, {
+	    key: 'handleInspectionTimeSubmit',
+	    value: function handleInspectionTimeSubmit(value) {
+	      this.props.setInspectionTimer(value);
 	    }
 	  }, {
 	    key: 'handleInterfaceModeChange',
 	    value: function handleInterfaceModeChange(e) {
+	      var value = e.target.value;
 	      this.setState({
-	        interfaceMode: e.target.value
+	        interfaceMode: value
 	      });
-	      console.log(this.state.interfaceMode);
+	      this.handleInterfaceModeSubmit(value);
+	    }
+	  }, {
+	    key: 'handleInterfaceModeSubmit',
+	    value: function handleInterfaceModeSubmit(value) {
+	      this.props.setInterfaceMode(value);
 	    }
 	  }, {
 	    key: 'render',
@@ -23764,6 +23791,8 @@
 	}(_react2.default.Component);
 
 	Controls.propTypes = {
+	  setInspectionTimer: _react2.default.PropTypes.func,
+	  setInterfaceMode: _react2.default.PropTypes.func,
 	  scramble: _react2.default.PropTypes.func
 	};
 
