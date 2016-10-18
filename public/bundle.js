@@ -60,6 +60,12 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	document.addEventListener('keypress', function (e) {
+	  if (e.keyCode == 32) {
+	    e.preventDefault();
+	  }
+	});
+
 	_reactDom2.default.render(_react2.default.createElement(_index2.default, null), document.getElementById('root'));
 
 /***/ },
