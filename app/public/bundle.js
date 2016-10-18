@@ -21709,6 +21709,8 @@
 	
 	      document.body.onkeyup = function (e) {
 	        if (e.keyCode == 32) {
+	          e.preventDefault();
+	
 	          if (_this3.state.running == true) {
 	            _this3.handleStop();
 	          } else if (_this3.state.running == false) {
