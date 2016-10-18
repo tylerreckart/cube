@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { Component } from 'react';
 
 import Instructions from './instructions';
 import Stats from './stats';
 
-class Timer extends React.Component {
+import styles from '../styles/main.css.js';
+
+class Timer extends Component {
   constructor(props) {
     super(props);
 
@@ -104,6 +106,8 @@ class Timer extends React.Component {
         <Instructions isRunning={this.state.running}/>
         <h1 className="timestamp">{this.tick(this.state.time)}</h1>
         <Stats solves={this.state.solves}/>
+        <p className="description"><strong>Instructions</strong></p>
+        <p className="description">Select your cube size and then time your solves by pressing the spacebar to start/stop the timer. The scramble instructions will be re-generated once the timer stops.</p>
       </div>
     );
   }

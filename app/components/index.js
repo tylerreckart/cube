@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Instructions from './instructions';
+import Footer from './footer';
 import Timer from './timer';
 
 class App extends React.Component {
@@ -8,6 +8,7 @@ class App extends React.Component {
     return (
       <div>
         <Timer/>
+        <Footer/>
       </div>
     );
   }

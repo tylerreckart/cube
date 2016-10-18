@@ -123,16 +123,16 @@ class Stats extends React.Component {
       <table className="stat-box">
         <tbody>
           <tr>
-            <td>Average:</td><td>{avg}</td>
-            <td>Best</td><td>{best}</td>
+            <td><strong>Average</strong></td><td>{avg}</td>
+            <td><strong>Best</strong></td><td>{best}</td>
           </tr>
           <tr>
-            <td>Average of 3:</td><td>{avgOf3}</td>
-            <td>Average of 10:</td><td>{avgOf10}</td>
+            <td><strong>Average of 3</strong></td><td>{avgOf3}</td>
+            <td><strong>Average of 10</strong></td><td>{avgOf10}</td>
           </tr>
           <tr>
-            <td>Average of 5:</td><td>{avgOf5}</td>
-            <td>Average of 12:</td><td>{avgOf12}</td>
+            <td><strong>Average of 5</strong></td><td>{avgOf5}</td>
+            <td><strong>Average of 12</strong></td><td>{avgOf12}</td>
           </tr>
         </tbody>
       </table>
