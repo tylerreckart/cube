@@ -21449,7 +21449,7 @@
 
 	var _instructions2 = _interopRequireDefault(_instructions);
 
-	var _timer = __webpack_require__(183);
+	var _timer = __webpack_require__(182);
 
 	var _timer2 = _interopRequireDefault(_timer);
 
@@ -21506,6 +21506,10 @@
 
 	var _scrambo2 = _interopRequireDefault(_scrambo);
 
+	var _controls = __webpack_require__(184);
+
+	var _controls2 = _interopRequireDefault(_controls);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -21524,22 +21528,15 @@
 
 	    _this.state = {
 	      instructions: [],
-	      interfaceModes: [{ _id: 0, value: 'light', text: 'Light' }, { _id: 1, value: 'dark', text: 'Dark' }],
-	      interfaceMode: 'light',
-	      options: [{ _id: 0, value: 222, text: '2x2' }, { _id: 1, value: 333, text: '3x3' }, { _id: 2, value: 444, text: '4x4' }, { _id: 3, value: 555, text: '5x5' }, { _id: 4, value: 666, text: '6x6' }, { _id: 5, value: 777, text: '7x7' }],
-	      inspectionTime: 0,
-	      inspectionTimes: [{ _id: 0, value: 0, text: 'No Inspection' }, { _id: 1, value: 3, text: '3 Seconds' }, { _id: 2, value: 5, text: '5 Seconds' }, { _id: 3, value: 10, text: '10 Seconds' }, { _id: 4, value: 15, text: '15 Seconds' }],
-	      value: '333'
+	      value: 333
 	    };
-
-	    _this.handleCubeSizeChange = _this.handleCubeSizeChange.bind(_this);
 	    return _this;
 	  }
 
 	  _createClass(Instructions, [{
 	    key: 'componentWillMount',
 	    value: function componentWillMount() {
-	      this.generateInstructions();
+	      this.generateInstructions(333);
 	    }
 	  }, {
 	    key: 'componentWillUnmount',
@@ -21550,38 +21547,12 @@
 	    }
 	  }, {
 	    key: 'generateInstructions',
-	    value: function generateInstructions() {
-	      var instructions = new _scrambo2.default().type(this.state.value).get();
+	    value: function generateInstructions(value) {
+	      var instructions = new _scrambo2.default().type(value).get();
 
 	      this.setState({
 	        instructions: instructions
 	      });
-	    }
-	  }, {
-	    key: 'handleCubeSizeChange',
-	    value: function handleCubeSizeChange(e) {
-	      this.setState({
-	        value: e.target.value
-	      });
-
-	      this.generateInstructions();
-	      console.log(this.state.value);
-	    }
-	  }, {
-	    key: 'handleInspectionTimeChange',
-	    value: function handleInspectionTimeChange(e) {
-	      this.setState({
-	        inspectionTime: e.target.value
-	      });
-	      console.log(this.state.inspectionTime);
-	    }
-	  }, {
-	    key: 'handleInterfaceModeChange',
-	    value: function handleInterfaceModeChange(e) {
-	      this.setState({
-	        interfaceMode: e.target.value
-	      });
-	      console.log(this.state.interfaceMode);
 	    }
 	  }, {
 	    key: 'render',
@@ -21599,79 +21570,7 @@
 	      return _react2.default.createElement(
 	        'div',
 	        null,
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'row controls' },
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'control-block' },
-	            _react2.default.createElement(
-	              'h3',
-	              null,
-	              'Cube Size:'
-	            ),
-	            _react2.default.createElement(
-	              'select',
-	              { value: this.state.options, onChange: this.handleCubeSizeChange },
-	              this.state.options.map(function (option) {
-	                return _react2.default.createElement(
-	                  'option',
-	                  {
-	                    key: option._id,
-	                    value: option.value
-	                  },
-	                  option.text
-	                );
-	              })
-	            )
-	          ),
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'control-block' },
-	            _react2.default.createElement(
-	              'h3',
-	              null,
-	              'Inspection Time:'
-	            ),
-	            _react2.default.createElement(
-	              'select',
-	              { value: this.state.inspectionTime, onChange: this.handleInspectionTimeChange.bind(this) },
-	              this.state.inspectionTimes.map(function (option) {
-	                return _react2.default.createElement(
-	                  'option',
-	                  {
-	                    key: option._id,
-	                    value: option.value
-	                  },
-	                  option.text
-	                );
-	              })
-	            )
-	          ),
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'control-block' },
-	            _react2.default.createElement(
-	              'h3',
-	              null,
-	              'Interface Mode:'
-	            ),
-	            _react2.default.createElement(
-	              'select',
-	              { value: this.state.interfaceMode, onChange: this.handleInterfaceModeChange.bind(this) },
-	              this.state.interfaceModes.map(function (option) {
-	                return _react2.default.createElement(
-	                  'option',
-	                  {
-	                    key: option._id,
-	                    value: option.value
-	                  },
-	                  option.text
-	                );
-	              })
-	            )
-	          )
-	        ),
+	        _react2.default.createElement(_controls2.default, null),
 	        _react2.default.createElement(
 	          'div',
 	          { className: 'instructions-container' },
@@ -23297,8 +23196,7 @@
 	module.exports = scrambler;
 
 /***/ },
-/* 182 */,
-/* 183 */
+/* 182 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23317,7 +23215,7 @@
 
 	var _instructions2 = _interopRequireDefault(_instructions);
 
-	var _stats = __webpack_require__(184);
+	var _stats = __webpack_require__(183);
 
 	var _stats2 = _interopRequireDefault(_stats);
 
@@ -23459,7 +23357,7 @@
 	exports.default = Timer;
 
 /***/ },
-/* 184 */
+/* 183 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23703,6 +23601,165 @@
 	};
 
 	exports.default = Stats;
+
+/***/ },
+/* 184 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Controls = function (_React$Component) {
+	  _inherits(Controls, _React$Component);
+
+	  function Controls() {
+	    _classCallCheck(this, Controls);
+
+	    var _this = _possibleConstructorReturn(this, (Controls.__proto__ || Object.getPrototypeOf(Controls)).call(this));
+
+	    _this.state = {
+	      interfaceModes: [{ _id: 0, value: 'light', text: 'Light' }, { _id: 1, value: 'dark', text: 'Dark' }],
+	      interfaceMode: 'light',
+	      option: 333,
+	      options: [{ _id: 0, value: 222, text: '2x2' }, { _id: 1, value: 333, text: '3x3' }, { _id: 2, value: 444, text: '4x4' }, { _id: 3, value: 555, text: '5x5' }, { _id: 4, value: 666, text: '6x6' }, { _id: 5, value: 777, text: '7x7' }],
+	      inspectionTime: 0,
+	      inspectionTimes: [{ _id: 0, value: 0, text: 'No Inspection' }, { _id: 1, value: 3, text: '3 Seconds' }, { _id: 2, value: 5, text: '5 Seconds' }, { _id: 3, value: 10, text: '10 Seconds' }, { _id: 4, value: 15, text: '15 Seconds' }],
+	      value: 333
+	    };
+	    return _this;
+	  }
+
+	  _createClass(Controls, [{
+	    key: 'componentWillReceiveProps',
+	    value: function componentWillReceiveProps() {
+	      var value = this.state.value;
+	    }
+	  }, {
+	    key: 'handleCubeSizeChange',
+	    value: function handleCubeSizeChange(e) {
+	      this.setState({
+	        value: e.target.value
+	      });
+
+	      var value = this.state.value;
+	      console.log(this.state.value);
+	    }
+	  }, {
+	    key: 'handleInspectionTimeChange',
+	    value: function handleInspectionTimeChange(e) {
+	      this.setState({
+	        inspectionTime: e.target.value
+	      });
+	      console.log(this.state.inspectionTime);
+	    }
+	  }, {
+	    key: 'handleInterfaceModeChange',
+	    value: function handleInterfaceModeChange(e) {
+	      this.setState({
+	        interfaceMode: e.target.value
+	      });
+	      console.log(this.state.interfaceMode);
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'row controls' },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'control-block' },
+	          _react2.default.createElement(
+	            'h3',
+	            null,
+	            'Cube Size:'
+	          ),
+	          _react2.default.createElement(
+	            'select',
+	            { value: this.state.value, onChange: this.handleCubeSizeChange.bind(this) },
+	            this.state.options.map(function (option) {
+	              return _react2.default.createElement(
+	                'option',
+	                {
+	                  key: option._id,
+	                  value: option.value
+	                },
+	                option.text
+	              );
+	            })
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'control-block' },
+	          _react2.default.createElement(
+	            'h3',
+	            null,
+	            'Inspection Time:'
+	          ),
+	          _react2.default.createElement(
+	            'select',
+	            { value: this.state.inspectionTime, onChange: this.handleInspectionTimeChange.bind(this) },
+	            this.state.inspectionTimes.map(function (option) {
+	              return _react2.default.createElement(
+	                'option',
+	                {
+	                  key: option._id,
+	                  value: option.value
+	                },
+	                option.text
+	              );
+	            })
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'control-block' },
+	          _react2.default.createElement(
+	            'h3',
+	            null,
+	            'Interface Mode:'
+	          ),
+	          _react2.default.createElement(
+	            'select',
+	            { value: this.state.interfaceMode, onChange: this.handleInterfaceModeChange.bind(this) },
+	            this.state.interfaceModes.map(function (option) {
+	              return _react2.default.createElement(
+	                'option',
+	                {
+	                  key: option._id,
+	                  value: option.value
+	                },
+	                option.text
+	              );
+	            })
+	          )
+	        )
+	      );
+	    }
+	  }]);
+
+	  return Controls;
+	}(_react2.default.Component);
+
+	exports.default = Controls;
 
 /***/ }
 /******/ ]);

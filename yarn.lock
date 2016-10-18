@@ -3673,6 +3673,10 @@ q@^1.1.2:
   version "1.4.1"
   resolved "https://registry.yarnpkg.com/q/-/q-1.4.1.tgz#55705bcd93c5f3673530c2c2cbc0c2b3addc286e"
 
+qs@^5.2.0:
+  version "5.2.1"
+  resolved "https://registry.yarnpkg.com/qs/-/qs-5.2.1.tgz#801fee030e0b9450d6385adc48a4cc55b44aedfc"
+
 qs@~6.2.0:
   version "6.2.1"
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.2.1.tgz#ce03c5ff0935bc1d9d69a9f14cbd18e568d67625"
@@ -4548,6 +4552,12 @@ webpack:
     uglify-js "~2.6.0"
     watchpack "^0.2.1"
     webpack-core "~0.6.0"
+
+webpack-combine-loaders:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/webpack-combine-loaders/-/webpack-combine-loaders-2.0.0.tgz#c8cd033ec797748b569c7823f54d4481670f3e05"
+  dependencies:
+    qs "^5.2.0"
 
 webpack-core@~0.6.0:
   version "0.6.8"

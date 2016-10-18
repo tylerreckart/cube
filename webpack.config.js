@@ -1,4 +1,5 @@
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var combineLoaders = require('webpack-combine-loaders');
 
 module.exports = {
   entry: './app/client.js',

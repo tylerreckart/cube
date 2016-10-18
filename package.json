@@ -33,6 +33,7 @@
     "scrambo": "^0.3.0",
     "style-loader": "^0.13.1",
     "webpack": "^1.13.2",
+    "webpack-combine-loaders": "^2.0.0",
     "xo": "^0.17.0"
   },
   "bugs": {
