@@ -21536,7 +21536,7 @@
 	  _createClass(Instructions, [{
 	    key: 'componentWillMount',
 	    value: function componentWillMount() {
-	      this.generateInstructions(333);
+	      this.generateInstructions(this.state.value);
 	    }
 	  }, {
 	    key: 'componentWillUnmount',
@@ -21550,9 +21550,14 @@
 	    value: function generateInstructions(value) {
 	      var instructions = new _scrambo2.default().type(value).get();
 
+	      console.log(value);
+
 	      this.setState({
-	        instructions: instructions
+	        instructions: instructions,
+	        value: value
 	      });
+
+	      // console.log(this.state.value);
 	    }
 	  }, {
 	    key: 'render',
@@ -21570,7 +21575,7 @@
 	      return _react2.default.createElement(
 	        'div',
 	        null,
-	        _react2.default.createElement(_controls2.default, null),
+	        _react2.default.createElement(_controls2.default, { scramble: this.generateInstructions.bind(this) }),
 	        _react2.default.createElement(
 	          'div',
 	          { className: 'instructions-container' },
@@ -23647,19 +23652,18 @@
 	  }
 
 	  _createClass(Controls, [{
-	    key: 'componentWillReceiveProps',
-	    value: function componentWillReceiveProps() {
-	      var value = this.state.value;
+	    key: 'handleSubmit',
+	    value: function handleSubmit(value) {
+	      this.props.scramble(value);
 	    }
 	  }, {
 	    key: 'handleCubeSizeChange',
 	    value: function handleCubeSizeChange(e) {
+	      var value = e.target.value;
 	      this.setState({
-	        value: e.target.value
+	        value: value
 	      });
-
-	      var value = this.state.value;
-	      console.log(this.state.value);
+	      this.handleSubmit(value);
 	    }
 	  }, {
 	    key: 'handleInspectionTimeChange',
@@ -23758,6 +23762,10 @@
 
 	  return Controls;
 	}(_react2.default.Component);
+
+	Controls.propTypes = {
+	  scramble: _react2.default.PropTypes.func
+	};
 
 	exports.default = Controls;
 

@@ -30,17 +30,16 @@ class Controls extends React.Component {
     };
   }
 
-  componentWillReceiveProps() {
-    var value = this.state.value;
+  handleSubmit(value) {
+    this.props.scramble(value);
   }
 
   handleCubeSizeChange(e) {
+    var value = e.target.value;
     this.setState({
-      value: e.target.value
+      value: value
     });
-
-    var value = this.state.value;
-    console.log(this.state.value);
+    this.handleSubmit(value);
   }
 
   handleInspectionTimeChange(e) {
@@ -110,6 +109,10 @@ class Controls extends React.Component {
       </div>
     )
   }
+}
+
+Controls.propTypes = {
+  scramble: React.PropTypes.func,
 }
 
 export default Controls;

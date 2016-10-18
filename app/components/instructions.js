@@ -13,7 +13,7 @@ class Instructions extends React.Component {
   }
 
   componentWillMount() {
-    this.generateInstructions(333);
+    this.generateInstructions(this.state.value);
   }
 
   componentWillUnmount() {
@@ -25,9 +25,14 @@ class Instructions extends React.Component {
   generateInstructions(value) {
     var instructions = new Scrambo().type(value).get();
 
+    console.log(value);
+
     this.setState({
-      instructions: instructions
+      instructions: instructions,
+      value: value
     });
+
+    // console.log(this.state.value);
   }
 
   render() {
@@ -41,7 +46,7 @@ class Instructions extends React.Component {
 
     return (
       <div>
-        <Controls/>
+        <Controls scramble={this.generateInstructions.bind(this)}/>
         <div className="instructions-container">
           <h3 className="instructions"><strong>Scramble:</strong> {instructions}</h3>
         </div>
