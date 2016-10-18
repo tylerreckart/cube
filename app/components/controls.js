@@ -64,7 +64,7 @@ class Controls extends React.Component {
     return (
       <div className="row controls">
         <div className="control-block">
-          <h3>Cube Size:</h3>
+          <h3>Cube Size</h3>
           <select value={this.state.value} onChange={this.handleCubeSizeChange.bind(this)}>
             {
               this.state.options.map((option) => {
@@ -78,7 +78,7 @@ class Controls extends React.Component {
             }
           </select>
         </div>
-
+{/*
         <div className="control-block">
           <h3>Inspection Time:</h3>
           <select value={this.state.inspectionTime} onChange={this.handleInspectionTimeChange.bind(this)}>
@@ -110,6 +110,7 @@ class Controls extends React.Component {
             }
           </select>
         </div>
+*/}
       </div>
     )
   }

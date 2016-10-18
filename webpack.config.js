@@ -7,6 +7,7 @@ module.exports = {
     path: './app/public',
     filename: 'bundle.js'
   },
+  devtool: "source-map",
   module: {
     loaders: [
       {
@@ -14,17 +15,8 @@ module.exports = {
           exclude: /node_modules/,
           loader: 'babel-loader'
       }, {
-        test: /\.css$/,
-        loader: ExtractTextPlugin.extract(
-          'style-loader',
-          combineLoaders([{
-            loader: 'css-loader',
-            query: {
-              modules: true,
-              localIdentName: '[name]__[local]___[hash:base64:5]'
-            }
-          }])
-        )
+          test: /\.scss$/,
+          loaders: ["style", "css?sourceMap", "sass?sourceMap"]
       }]
   },
   plugins: [

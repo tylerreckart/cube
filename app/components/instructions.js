@@ -50,19 +50,18 @@ class Instructions extends React.Component {
 
     document.addEventListener('keypress', (e) => {
       if (e.keyCode == 32 && this.props.isRunning == true) {
-        this.scramble();
+        this.scramble(this.state.value);
       }
     });
 
     return (
       <div className="row">
-        <Controls
-          setInspectionTimer={this.setInspectionTimer.bind(this)}
-          setInterfaceMode={this.setInterfaceMode.bind(this)}
-          scramble={this.scramble.bind(this)} />
-
-        <div className="row instructions-container">
-          <h3 className="instructions"><strong>Scramble:</strong> {scramble}</h3>
+        <div className="row scramble-container">
+          <Controls
+            setInspectionTimer={this.setInspectionTimer.bind(this)}
+            setInterfaceMode={this.setInterfaceMode.bind(this)}
+            scramble={this.scramble.bind(this)} />
+          <h3 className="scramble"><strong>Scramble</strong> {scramble}</h3>
         </div>
       </div>
     );
