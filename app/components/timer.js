@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
 
-import Instructions from './instructions';
+import Scramble from './scramble';
 import Stats from './stats';
-
-import styles from '../styles/main.css.js';
 
 class Timer extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
+      interfaceMode: 'light',
       running: false,
       solves: [],
       start: 0,
@@ -73,34 +72,31 @@ class Timer extends Component {
 
   handleStop() {
     clearInterval(this.increment);
-
-    console.log(this.state.time)
-
-    this.setState({
-      time: this.state.time,
-      running: false
-    });
-
     var myArr = this.state.solves.slice();
-
     myArr.push(Math.floor(this.state.time / 10));
 
     this.setState({
-      solves: myArr
+      running: false,
+      solves: myArr,
+      time: Math.floor(this.state.time),
     });
   }
 
   render() {
     document.body.onkeyup = (e) => {
       if (e.keyCode == 32) {
-        e.preventDefault();
-
         if (this.state.running == true) {
           this.handleStop();
         } else if (this.state.running == false) {
           this.handleStart();
         }
       }
+    }
+
+    if (this.state.interfaceMode === 'light') {
+      console.log('LIGHT');
+    } else if (this.state.interfaceMode === 'dark') {
+      console.log('DARK');
     }
 
     return (

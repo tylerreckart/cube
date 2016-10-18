@@ -3,7 +3,7 @@ import Scrambo from 'scrambo';
 
 import Controls from './controls';
 
-class Instructions extends React.Component {
+class Scramble extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -68,8 +68,8 @@ class Instructions extends React.Component {
   }
 }
 
-Instructions.propTypes = {
+Scramble.propTypes = {
   isRunning: React.PropTypes.bool.isRequired
 }
 
-export default Instructions;
+export default Scramble;

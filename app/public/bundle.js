@@ -21593,17 +21593,13 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _instructions = __webpack_require__(175);
+	var _scramble = __webpack_require__(186);
 	
-	var _instructions2 = _interopRequireDefault(_instructions);
+	var _scramble2 = _interopRequireDefault(_scramble);
 	
 	var _stats = __webpack_require__(185);
 	
 	var _stats2 = _interopRequireDefault(_stats);
-	
-	var _mainCss = __webpack_require__(186);
-	
-	var _mainCss2 = _interopRequireDefault(_mainCss);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -21622,6 +21618,7 @@
 	    var _this = _possibleConstructorReturn(this, (Timer.__proto__ || Object.getPrototypeOf(Timer)).call(this, props));
 	
 	    _this.state = {
+	      interfaceMode: 'light',
 	      running: false,
 	      solves: [],
 	      start: 0,
@@ -21692,20 +21689,13 @@
 	    key: 'handleStop',
 	    value: function handleStop() {
 	      clearInterval(this.increment);
-	
-	      console.log(this.state.time);
-	
-	      this.setState({
-	        time: this.state.time,
-	        running: false
-	      });
-	
 	      var myArr = this.state.solves.slice();
-	
 	      myArr.push(Math.floor(this.state.time / 10));
 	
 	      this.setState({
-	        solves: myArr
+	        running: false,
+	        solves: myArr,
+	        time: Math.floor(this.state.time)
 	      });
 	    }
 	  }, {
@@ -21715,8 +21705,6 @@
 	
 	      document.body.onkeyup = function (e) {
 	        if (e.keyCode == 32) {
-	          e.preventDefault();
-	
 	          if (_this3.state.running == true) {
 	            _this3.handleStop();
 	          } else if (_this3.state.running == false) {
@@ -21725,10 +21713,16 @@
 	        }
 	      };
 	
+	      if (this.state.interfaceMode === 'light') {
+	        console.log('LIGHT');
+	      } else if (this.state.interfaceMode === 'dark') {
+	        console.log('DARK');
+	      }
+	
 	      return _react2.default.createElement(
 	        'div',
 	        null,
-	        _react2.default.createElement(_instructions2.default, { isRunning: this.state.running }),
+	        _react2.default.createElement(Instructions, { isRunning: this.state.running }),
 	        _react2.default.createElement(
 	          'h1',
 	          { className: 'timestamp' },
@@ -21759,139 +21753,7 @@
 	exports.default = Timer;
 
 /***/ },
-/* 175 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _scrambo = __webpack_require__(176);
-	
-	var _scrambo2 = _interopRequireDefault(_scrambo);
-	
-	var _controls = __webpack_require__(184);
-	
-	var _controls2 = _interopRequireDefault(_controls);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var Instructions = function (_React$Component) {
-	  _inherits(Instructions, _React$Component);
-	
-	  function Instructions(props) {
-	    _classCallCheck(this, Instructions);
-	
-	    var _this = _possibleConstructorReturn(this, (Instructions.__proto__ || Object.getPrototypeOf(Instructions)).call(this, props));
-	
-	    _this.state = {
-	      inspectionTime: 0,
-	      interfaceMode: 'light',
-	      scramble: [],
-	      value: 333
-	    };
-	    return _this;
-	  }
-	
-	  _createClass(Instructions, [{
-	    key: 'componentWillMount',
-	    value: function componentWillMount() {
-	      this.scramble(this.state.value);
-	    }
-	  }, {
-	    key: 'componentWillUnmount',
-	    value: function componentWillUnmount() {
-	      this.setState({
-	        scramble: []
-	      });
-	    }
-	  }, {
-	    key: 'setInspectionTimer',
-	    value: function setInspectionTimer(value) {
-	      this.setState({
-	        inspectionTime: value
-	      });
-	    }
-	  }, {
-	    key: 'setInterfaceMode',
-	    value: function setInterfaceMode(value) {
-	      this.setState({
-	        interfaceMode: value
-	      });
-	    }
-	  }, {
-	    key: 'scramble',
-	    value: function scramble(value) {
-	      var scramble = new _scrambo2.default().type(value).get();
-	
-	      this.setState({
-	        scramble: scramble,
-	        value: value
-	      });
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      var _this2 = this;
-	
-	      var scramble = this.state.scramble.join(" ").toString();
-	
-	      document.addEventListener('keypress', function (e) {
-	        if (e.keyCode == 32 && _this2.props.isRunning == true) {
-	          _this2.scramble(_this2.state.value);
-	        }
-	      });
-	
-	      return _react2.default.createElement(
-	        'div',
-	        { className: 'row' },
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'row scramble-container' },
-	          _react2.default.createElement(_controls2.default, {
-	            setInspectionTimer: this.setInspectionTimer.bind(this),
-	            setInterfaceMode: this.setInterfaceMode.bind(this),
-	            scramble: this.scramble.bind(this) }),
-	          _react2.default.createElement(
-	            'h3',
-	            { className: 'scramble' },
-	            _react2.default.createElement(
-	              'strong',
-	              null,
-	              'Scramble'
-	            ),
-	            ' ',
-	            scramble
-	          )
-	        )
-	      );
-	    }
-	  }]);
-	
-	  return Instructions;
-	}(_react2.default.Component);
-	
-	Instructions.propTypes = {
-	  isRunning: _react2.default.PropTypes.bool.isRequired
-	};
-	
-	exports.default = Instructions;
-
-/***/ },
+/* 175 */,
 /* 176 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -23889,81 +23751,136 @@
 
 /***/ },
 /* 186 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	module.exports = {
-	  body: {
-	    fontFamily: '-apple-system, sans-serif',
-	    fontSize: '16px',
-	    fontWeight: '400',
-	    textAlign: 'center'
-	  },
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
 	
-	  darkMode: {
-	    body: {
-	      backgroundColor: 'black',
-	      color: 'white'
-	    },
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
-	    btn: {
-	      backgroundColor: 'white',
-	      color: 'black'
-	    }
-	  },
+	var _react = __webpack_require__(1);
 	
-	  lightMode: {
-	    body: {
-	      backgroundColor: 'white',
-	      color: 'black'
-	    },
+	var _react2 = _interopRequireDefault(_react);
 	
-	    btn: {
-	      backgroundColor: 'black',
-	      color: 'white'
-	    }
-	  },
+	var _scrambo = __webpack_require__(176);
 	
-	  btn: {
-	    background: 'inherit',
-	    border: 'none',
-	    borderRadius: '3px',
-	    cursor: 'pointer',
-	    fontSize: '1em',
-	    letterSpacing: '0.025em',
-	    outline: 'none',
-	    padding: '1.25em 2em'
-	  },
+	var _scrambo2 = _interopRequireDefault(_scrambo);
 	
-	  scramble: {
-	    letterSpacing: '0.05em',
-	    strong: {
-	      letterSpacing: '0'
-	    }
-	  },
+	var _controls = __webpack_require__(184);
 	
-	  p: { lineHeight: '2em' },
+	var _controls2 = _interopRequireDefault(_controls);
 	
-	  td: { textAlign: 'left' },
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	  scrambleContainer: {
-	    fontSize: '.875em',
-	    padding: '2.5em 0 0',
-	    width: '100%'
-	  },
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
-	  statBox: {
-	    margin: '0 auto',
-	    width: '400px'
-	  },
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 	
-	  timestamp: {
-	    fontSize: '15em',
-	    fontWeight: '300',
-	    padding: '.25em 0 .3em'
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Scramble = function (_React$Component) {
+	  _inherits(Scramble, _React$Component);
+	
+	  function Scramble(props) {
+	    _classCallCheck(this, Scramble);
+	
+	    var _this = _possibleConstructorReturn(this, (Scramble.__proto__ || Object.getPrototypeOf(Scramble)).call(this, props));
+	
+	    _this.state = {
+	      inspectionTime: 0,
+	      interfaceMode: 'light',
+	      scramble: [],
+	      value: 333
+	    };
+	    return _this;
 	  }
+	
+	  _createClass(Scramble, [{
+	    key: 'componentWillMount',
+	    value: function componentWillMount() {
+	      this.scramble(this.state.value);
+	    }
+	  }, {
+	    key: 'componentWillUnmount',
+	    value: function componentWillUnmount() {
+	      this.setState({
+	        scramble: []
+	      });
+	    }
+	  }, {
+	    key: 'setInspectionTimer',
+	    value: function setInspectionTimer(value) {
+	      this.setState({
+	        inspectionTime: value
+	      });
+	    }
+	  }, {
+	    key: 'setInterfaceMode',
+	    value: function setInterfaceMode(value) {
+	      this.setState({
+	        interfaceMode: value
+	      });
+	    }
+	  }, {
+	    key: 'scramble',
+	    value: function scramble(value) {
+	      var scramble = new _scrambo2.default().type(value).get();
+	
+	      this.setState({
+	        scramble: scramble,
+	        value: value
+	      });
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var _this2 = this;
+	
+	      var scramble = this.state.scramble.join(" ").toString();
+	
+	      document.addEventListener('keypress', function (e) {
+	        if (e.keyCode == 32 && _this2.props.isRunning == true) {
+	          _this2.scramble(_this2.state.value);
+	        }
+	      });
+	
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'row' },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'row scramble-container' },
+	          _react2.default.createElement(_controls2.default, {
+	            setInspectionTimer: this.setInspectionTimer.bind(this),
+	            setInterfaceMode: this.setInterfaceMode.bind(this),
+	            scramble: this.scramble.bind(this) }),
+	          _react2.default.createElement(
+	            'h3',
+	            { className: 'scramble' },
+	            _react2.default.createElement(
+	              'strong',
+	              null,
+	              'Scramble'
+	            ),
+	            ' ',
+	            scramble
+	          )
+	        )
+	      );
+	    }
+	  }]);
+	
+	  return Scramble;
+	}(_react2.default.Component);
+	
+	Scramble.propTypes = {
+	  isRunning: _react2.default.PropTypes.bool.isRequired
 	};
+	
+	exports.default = Scramble;
 
 /***/ }
 /******/ ]);
