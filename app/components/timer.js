@@ -101,7 +101,7 @@ class Timer extends Component {
 
     return (
       <div>
-        <Instructions isRunning={this.state.running}/>
+        <Scramble isRunning={this.state.running}/>
         <h1 className="timestamp">{this.tick(this.state.time)}</h1>
         <Stats solves={this.state.solves}/>
         <p className="description"><strong>Instructions</strong></p>

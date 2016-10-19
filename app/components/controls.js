@@ -78,7 +78,7 @@ class Controls extends React.Component {
             }
           </select>
         </div>
-{/*
+
         <div className="control-block">
           <h3>Inspection Time:</h3>
           <select value={this.state.inspectionTime} onChange={this.handleInspectionTimeChange.bind(this)}>
@@ -110,7 +110,7 @@ class Controls extends React.Component {
             }
           </select>
         </div>
-*/}
+
       </div>
     )
   }

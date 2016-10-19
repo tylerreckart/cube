@@ -56,11 +56,12 @@ class Scramble extends React.Component {
 
     return (
       <div className="row">
+      <Controls
+        setInspectionTimer={this.setInspectionTimer.bind(this)}
+        setInterfaceMode={this.setInterfaceMode.bind(this)}
+        scramble={this.scramble.bind(this)} />
+        
         <div className="row scramble-container">
-          <Controls
-            setInspectionTimer={this.setInspectionTimer.bind(this)}
-            setInterfaceMode={this.setInterfaceMode.bind(this)}
-            scramble={this.scramble.bind(this)} />
           <h3 className="scramble"><strong>Scramble</strong> {scramble}</h3>
         </div>
       </div>

@@ -21722,7 +21722,7 @@
 	      return _react2.default.createElement(
 	        'div',
 	        null,
-	        _react2.default.createElement(Instructions, { isRunning: this.state.running }),
+	        _react2.default.createElement(_scramble2.default, { isRunning: this.state.running }),
 	        _react2.default.createElement(
 	          'h1',
 	          { className: 'timestamp' },
@@ -23463,6 +23463,52 @@
 	              );
 	            })
 	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'control-block' },
+	          _react2.default.createElement(
+	            'h3',
+	            null,
+	            'Inspection Time:'
+	          ),
+	          _react2.default.createElement(
+	            'select',
+	            { value: this.state.inspectionTime, onChange: this.handleInspectionTimeChange.bind(this) },
+	            this.state.inspectionTimes.map(function (option) {
+	              return _react2.default.createElement(
+	                'option',
+	                {
+	                  key: option._id,
+	                  value: option.value
+	                },
+	                option.text
+	              );
+	            })
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'control-block' },
+	          _react2.default.createElement(
+	            'h3',
+	            null,
+	            'Interface Mode:'
+	          ),
+	          _react2.default.createElement(
+	            'select',
+	            { value: this.state.interfaceMode, onChange: this.handleInterfaceModeChange.bind(this) },
+	            this.state.interfaceModes.map(function (option) {
+	              return _react2.default.createElement(
+	                'option',
+	                {
+	                  key: option._id,
+	                  value: option.value
+	                },
+	                option.text
+	              );
+	            })
+	          )
 	        )
 	      );
 	    }
@@ -23850,13 +23896,13 @@
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'row' },
+	        _react2.default.createElement(_controls2.default, {
+	          setInspectionTimer: this.setInspectionTimer.bind(this),
+	          setInterfaceMode: this.setInterfaceMode.bind(this),
+	          scramble: this.scramble.bind(this) }),
 	        _react2.default.createElement(
 	          'div',
 	          { className: 'row scramble-container' },
-	          _react2.default.createElement(_controls2.default, {
-	            setInspectionTimer: this.setInspectionTimer.bind(this),
-	            setInterfaceMode: this.setInterfaceMode.bind(this),
-	            scramble: this.scramble.bind(this) }),
 	          _react2.default.createElement(
 	            'h3',
 	            { className: 'scramble' },
